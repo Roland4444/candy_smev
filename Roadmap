@@ -1,0 +1,16 @@
+Whats done:
+    Embed server
+    Reading Data From Database
+    Packaging to EXE
+    Getting data in UTF-8 //system locale must set to UTF8!
+    Adding UUID gen in xml injection
+ 	SOAP 1.1 request, response
+ 	Digest gost3411
+ 	Transform! stolen from Voskhod idiots
+TODO TASKS:
+    Encryption
+    https://smev3.gosuslugi.ru/portal/faq.jsp
+
+http://www.sql.ru/forum/1193215/otpravka-gotovogo-soap-xml
+https://stackoverflow.com/questions/9203177/pkcs-7-signeddata-issue-in-bouncycastle
+https://club.directum.ru/post/546
