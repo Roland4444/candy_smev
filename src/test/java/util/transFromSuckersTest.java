@@ -4,6 +4,7 @@ import org.apache.xml.security.transforms.TransformationException;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -31,7 +32,6 @@ public class transFromSuckersTest {
 
     @Test
     public void processini() throws IOException, TransformationException {
-
         FileWriter wr = new FileWriter("input.xml");
         String write = "<ns2:SenderProvidedRequestData xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\" Id=\"SIGNED_BY_CONSUMER\">\n" +
                 " <MessagePrimaryContent xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\">\n" +
@@ -45,35 +45,41 @@ public class transFromSuckersTest {
         InputStream in = new FileInputStream("input.xml");
         OutputStream out = new FileOutputStream("out.xml");
         test.process(in, out);
-        StringBuilder contentBuilder = new StringBuilder()
-        F stream = Files.lines(Paths.get("out.xml"), StandardCharsets.UTF_8)
-        run { stream.forEach { s -> contentBuilder.append(s).append("") } }
-        val etalon = "<ns1:SenderProvidedRequestData xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\" Id=\"SIGNED_BY_CONSUMER\"><ns2:MessagePrimaryContent xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\"><ns3:SomeRequest xmlns:ns3=\"urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0\"><ns3:x>qweqwe</ns3:x></ns3:SomeRequest></ns2:MessagePrimaryContent></ns1:SenderProvidedRequestData>"
-        Assert.assertEquals(etalon.length.toLong(), contentBuilder.toString().length.toLong())
-        Assert.assertEquals(etalon, contentBuilder.toString())
+        File f = new File("out.xml");
+        BufferedReader b = new BufferedReader(new FileReader(f));
+        String readLine = "";
+        String input="";
+        while ((readLine = b.readLine()) != null)
+            input+=readLine;
+        String etalon = "<ns1:SenderProvidedRequestData xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\" Id=\"SIGNED_BY_CONSUMER\"><ns2:MessagePrimaryContent xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\"><ns3:SomeRequest xmlns:ns3=\"urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0\"><ns3:x>qweqwe</ns3:x></ns3:SomeRequest></ns2:MessagePrimaryContent></ns1:SenderProvidedRequestData>";
+        assertEquals(etalon, input);
     }
 
     @Test
-    public void process() {
-        val test = transFromSuckers()
-        val wr = FileWriter("input.xml")
-        val write = "<ns2:SenderProvidedRequestData xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\" Id=\"SIGNED_BY_CONSUMER\">\n" +
-                " <MessagePrimaryContent xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\">\n" +
-                "  <SomeRequest:SomeRequest xmlns:SomeRequest=\"urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0\">\n" +
-                "   <x xmlns=\"urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0\">qweqwe</x>\n" +
-                "  </SomeRequest:SomeRequest>\n" +
-                " </MessagePrimaryContent>\n" +
-                "</ns2:SenderProvidedRequestData>"
-        wr.write(write)
-        wr.close()
-        val `in` = FileInputStream("input.xml")
-        val out = FileOutputStream("out.xml")
-        test.process(`in`, out)
-        val contentBuilder = StringBuilder()
-        val stream = Files.lines(Paths.get("out.xml"), StandardCharsets.UTF_8)
-        run { stream.forEach { s -> contentBuilder.append(s).append("") } }
-        val etalon = "<ns1:SenderProvidedRequestData xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\" Id=\"SIGNED_BY_CONSUMER\"><ns2:MessagePrimaryContent xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\"><ns3:SomeRequest xmlns:ns3=\"urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0\"><ns3:x>qweqwe</ns3:x></ns3:SomeRequest></ns2:MessagePrimaryContent></ns1:SenderProvidedRequestData>"
-        Assert.assertEquals(etalon, contentBuilder.toString())
+    public void process() throws IOException, TransformationException {
+        FileWriter wr = new FileWriter("input.xml");
+        String write = "<ns2:SenderProvidedRequestData xmlns:ns2=\\\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\\\" Id=\\\"SIGNED_BY_CONSUMER\\\">\\n\" +\n" +
+                "                \" <MessagePrimaryContent xmlns=\\\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\\\">\\n\" +\n" +
+                "                \"  <SomeRequest:SomeRequest xmlns:SomeRequest=\\\"urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0\\\">\\n\" +\n" +
+                "                \"   <x xmlns=\\\"urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0\\\">qweqwe</x>\\n\" +\n" +
+                "                \"  </SomeRequest:SomeRequest>\\n\" +\n" +
+                "                \" </MessagePrimaryContent>\\n\" +\n" +
+                "                \"</ns2:SenderProvidedRequestData>";
+        wr.write(write);
+        wr.close();
+        InputStream in = new FileInputStream("input.xml");
+        OutputStream out = new FileOutputStream("out.xml");
+        test.process(in, out);
+        File f = new File("out.xml");
+        BufferedReader b = new BufferedReader(new FileReader(f));
+        String readLine = "";
+        String input="";
+        while ((readLine = b.readLine()) != null)
+            input+=readLine;
+        String etalon = "<ns1:SenderProvidedRequestData xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\" Id=\"SIGNED_BY_CONSUMER\"><ns2:MessagePrimaryContent xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\"><ns3:SomeRequest xmlns:ns3=\"urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0\"><ns3:x>qweqwe</ns3:x></ns3:SomeRequest></ns2:MessagePrimaryContent></ns1:SenderProvidedRequestData>";
+        assertEquals(etalon, input);
+
+
     }
 
     @Test
