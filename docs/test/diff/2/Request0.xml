@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fssp:RestrictionDocumentsRequest xmlns:fssp="urn://x-artifacts-fssp-ru/mvv/smev3/restriction-documents/1.1.1" xmlns:c="urn://x-artifacts-fssp-ru/mvv/smev3/container/1.1.0">
+    <c:ID>12f1a3cd-cd5f-48fe-8eb4-f73e3d9f8a9g</c:ID>
+    <c:Date>2015-10-16T00:00:00</c:Date>
+    <c:SenderID>FSSP01</c:SenderID>
+    <c:SenderDepartmentCode>69025</c:SenderDepartmentCode>
+    <c:ReceiverID>SBER01</c:ReceiverID>
+    <c:ReceiverDepartmentCode>40</c:ReceiverDepartmentCode>
+    <c:DocumentStatus>
+        <c:ID>28252008159967</c:ID>
+        <c:ReferencedDocumentId>2825333889916</c:ReferencedDocumentId>
+        <c:StatusDate>2015-10-16T15:00:00</c:StatusDate>
+        <c:StatusId>1</c:StatusId>
+        <c:MessageText>Доставлен до учетной системы</c:MessageText>
+    </c:DocumentStatus>
+</fssp:RestrictionDocumentsRequest>

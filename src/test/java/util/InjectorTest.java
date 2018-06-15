@@ -60,4 +60,12 @@ public class InjectorTest {
         assertEquals(dataInject, ext.extractRaw("xml4test/check.xml", "MessageID"));
         System.out.println(ext.extractRaw("xml4test/check.xml", "MessageID"));
     }
+
+    @Test
+    public void cert() throws IOException {
+        String cert = "certs/certs.pem";
+        Injector inj = new Injector();
+        assertNotEquals(null, inj.cert(cert));
+        System.out.print(inj.cert(cert));
+    }
 }

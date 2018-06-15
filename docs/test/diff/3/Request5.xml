@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:FNSVipipadrRequest xmlns:ns1="urn://x-artefacts-fns-vipipadr-ru/246-19/4.0.0" ИдДок="00000000-0000-0000-0000-000000000001" НомерДела="БН">
+	<ns1:ЗапросИП>
+		<ns1:ОГРНИП>305500910900012</ns1:ОГРНИП>
+	</ns1:ЗапросИП>
+</ns1:FNSVipipadrRequest>

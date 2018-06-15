@@ -48,4 +48,14 @@ public class ExtractorTest {
         wr.close();
         assertEquals("12", ext.extractRaw("xml4test/raww.xml", "Sender"));
     }
+
+    @Test
+    public void extractRawextended() throws IOException {
+        Extractor ext = new Extractor();
+        String data ="<  12Sender mr  >12</   12Sender mr   >";
+        FileWriter wr = new FileWriter("xml4test/raww.xml");
+        wr.write(data);
+        wr.close();
+        assertEquals("12", ext.extractRaw("xml4test/raww.xml", "Sender"));
+    }
 }

@@ -1,9 +1,6 @@
 package util;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class Injector {
     public String injectTag(String input, String TagwithclosedEmbrace, String valueToInject){
@@ -56,6 +53,18 @@ public class Injector {
     @Deprecated
     public String getTagValue(String xml, String tagName){
         return xml.split("<"+tagName+">")[1].split("</"+tagName+">")[0];
+    }
+
+    public String cert(String certFile) throws IOException {
+        String res="";
+        File f = new File(certFile);
+        BufferedReader b = new BufferedReader(new FileReader(f));
+        String readLine = "";
+        String input="";
+        StringBuffer strBuffer = new StringBuffer();
+        while ((readLine = b.readLine()) != null)
+            if (readLine.indexOf("CERTIFICATE")<0) strBuffer.append(readLine);
+        return strBuffer.toString();
     }
 
 }

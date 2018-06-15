@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fssp:RestrictionDocumentsResponse xmlns:fssp="urn://x-artifacts-fssp-ru/mvv/smev3/restriction-documents/1.1.1" xmlns:c="urn://x-artifacts-fssp-ru/mvv/smev3/container/1.1.0">
+    <c:ID>038e7a1f-6c51-4843-8155-acf3e169afb1</c:ID>
+    <c:ReferencedPackId>12f1a3cd-cd5f-48fe-8eb4-f73e3d9f8a9g</c:ReferencedPackId>
+    <c:Date>2015-10-16T12:00:00</c:Date>
+    <c:ReceiptResult>SUCCESS</c:ReceiptResult>
+    <c:DocumentReceipt>
+        <c:ID>1197</c:ID>
+        <c:ReferencedDocumentId>28252008159967</c:ReferencedDocumentId>
+        <c:ReceiptDate>2015-10-16T12:00:00</c:ReceiptDate>
+        <c:ReceiptId>93</c:ReceiptId>
+    </c:DocumentReceipt>
+</fssp:RestrictionDocumentsResponse>
