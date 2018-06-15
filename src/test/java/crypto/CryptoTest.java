@@ -32,6 +32,9 @@ public class CryptoTest {
         transFromSuckers trans = new transFromSuckers();
         Gost3411Hash hasher = new Gost3411Hash();
         timeBasedUUID uid = new timeBasedUUID();
+        String fullSign = "xml4test/1fullSign.xml";
+        String hashSign = "xml4test/2hashSign.xml";
+        String base64HashSign = "xml4test/3base64HashSign.xml";
         String cert = "certs/certs.pem";
         String input = "xml4test/naked.xml";
         String preparedT = "xml4test/nakedtranaformed.xml";
@@ -62,7 +65,6 @@ public class CryptoTest {
         trans.process(in, out);
         Path p = Paths.get(preparedT);
         byte[] arr = Files.readAllBytes(p);
-
         Security.addProvider(new BouncyCastleProvider());
         Crypto crypto = new GOSTCrypto();
         KeyPair root = crypto.generateKeyPair();
@@ -78,14 +80,20 @@ public class CryptoTest {
         wr2.close();
         inj.injectTagInFile(input,withId1,":MessageID>", uid.generate());
         System.out.println("HASH>>>\n"+hasher.h_Base64rfc2045(arr)+"\n");
-        byte[] signature = crypto.sign(arr, subject.getPrivate());
+        byte[] signatureAllTranformed = crypto.sign(arr, subject.getPrivate());
+        byte[] signatureHash = crypto.sign(hasher.hash_byte(arr), subject.getPrivate());
+        byte[] signatureHashBase64 = crypto.sign(hasher.h_Base64rfc2045(arr), subject.getPrivate());
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println("Signature>>>>\n"+hasher.base64(signature)+"\n<<<<<");
-        System.out.println(signature.length);
+        System.out.println("Signature>@FULL>>>\n"+hasher.base64(signatureAllTranformed)+"\n<<<<<");
+        System.out.println("Signature>@HAsh bytes>>>\n"+hasher.base64(signatureHash)+"\n<<<<<");
+        System.out.println("Signature>@Base64Hash>>>\n"+hasher.base64(signatureHashBase64)+"\n<<<<<");
+        System.out.println("\n");
         inj.injectTagInFile(input,withId1,":MessageID>", uid.generate());
         inj.injectTagInFile(withId1,withIdHash,"DigestValue>", hasher.h_Base64rfc2045(arr));
-        inj.injectTagInFile(withIdHash,withIdHashSig,"SignatureValue>", hasher.base64(signature));
+        inj.injectTagInFile(withIdHash,withIdHashSig,"SignatureValue>", hasher.base64(signatureAllTranformed));
         inj.injectTagInFile(withIdHashSig,withIdHashSigCert,"X509Certificate>", "");
-
+        inj.injectTagInFile(withIdHash,fullSign,"SignatureValue>", hasher.base64(signatureAllTranformed));
+        inj.injectTagInFile(withIdHash,hashSign,"SignatureValue>", hasher.base64(signatureHash));
+        inj.injectTagInFile(withIdHash,base64HashSign,"SignatureValue>", hasher.base64(signatureHashBase64));
     }
 }
