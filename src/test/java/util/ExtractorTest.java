@@ -38,4 +38,14 @@ public class ExtractorTest {
         Gost3411Hash hasher = new Gost3411Hash();
         assertEquals("/jXl70XwnttJB5sSokwh8SaVHwo2gjgILSu0qBaLUAo=", hasher.h_Base64rfc2045(arr));
     }
+
+    @Test
+    public void extractRaw() throws IOException {
+        Extractor ext = new Extractor();
+        String data ="<Sender>12</Sender>";
+        FileWriter wr = new FileWriter("xml4test/raww.xml");
+        wr.write(data);
+        wr.close();
+        assertEquals("12", ext.extractRaw("xml4test/raww.xml", "Sender"));
+    }
 }
