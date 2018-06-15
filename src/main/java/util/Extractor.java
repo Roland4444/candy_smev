@@ -8,6 +8,7 @@ import java.io.IOException;
 public class Extractor {
     public Extractor(){
     }
+    
     public String parse(String FileName, String tagToFind) throws IOException {
         String result="";
         String input="";

@@ -1,0 +1,7 @@
+<ns2:SenderProvidedRequestData xmlns:ns2="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0" Id="SIGNED_BY_CONSUMER">
+ <MessagePrimaryContent xmlns="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0">
+  <SomeRequest:SomeRequest xmlns:SomeRequest="urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0">
+   <x xmlns="urn://x-artifacts-it-ru/vs/smev/test/test-business-data/1.0">qweqwe</x>
+  </SomeRequest:SomeRequest>
+ </MessagePrimaryContent>
+</ns2:SenderProvidedRequestData>
