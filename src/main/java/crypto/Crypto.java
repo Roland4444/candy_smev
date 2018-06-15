@@ -57,9 +57,9 @@ public abstract class Crypto {
         serial, new Date(), toDate(expiresAt), new X500Principal(subjectDn), subject);
 
     JcaX509ExtensionUtils x509Utils = new JcaX509ExtensionUtils();
-    certGen.addExtension(basicConstraints, true, new BasicConstraints(true));
-    certGen.addExtension(keyUsage, true, new KeyUsage(cRLSign | digitalSignature | keyCertSign));
-    certGen.addExtension(extendedKeyUsage, true, new ExtendedKeyUsage(new KeyPurposeId[]{id_kp_OCSPSigning, id_kp_timeStamping, id_kp_codeSigning}));
+    //certGen.addExtension(basicConstraints, true, new BasicConstraints(true));
+    //certGen.addExtension(keyUsage, true, new KeyUsage(cRLSign | digitalSignature | keyCertSign));
+    //certGen.addExtension(extendedKeyUsage, true, new ExtendedKeyUsage(new KeyPurposeId[]{id_kp_OCSPSigning, id_kp_timeStamping, id_kp_codeSigning}));
     certGen.addExtension(subjectKeyIdentifier, false, x509Utils.createSubjectKeyIdentifier(subject));
     certGen.addExtension(authorityKeyIdentifier, false, x509Utils.createAuthorityKeyIdentifier(issuer.getPublic()));
     X509CertificateHolder holder = certGen.build(getContentSigner(issuer.getPrivate()));

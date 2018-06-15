@@ -19,5 +19,15 @@ public class SAAJTest {
         SAAJ saa= new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl");
         assertNotEquals(null, saa.send(withIdHashSigCert4, "responce.xml"));
     }
+
+    @Test
+    public void normal() throws Exception {
+        String withIdHashSigCert4 = "xml4test/sendReqMod.xml";
+        SAAJ saa= new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl");
+        assertNotEquals(null, saa.send(withIdHashSigCert4, "responce.xml"));
+    }
+
+
+
 }
 

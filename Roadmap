@@ -19,3 +19,4 @@ https://club.directum.ru/post/546
     Info:
     raw @  cert.pem =>  <ds:X509Certificate>
     Digest = Hash @ Tranform @[{raw} SenderProvidedRequestData]
+    Certificate = Public key???

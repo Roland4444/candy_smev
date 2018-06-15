@@ -28,8 +28,6 @@ public class Demo {
     System.out.println("cert>>>>>>>>>>>>>"+subjectCert);
     System.out.println("************************************************END CERTIFICATE*******************");
 
-
-
     crypto.toPEM(subjectCert);
     FileWriter wr = new FileWriter("cert.pem");
     wr.write(crypto.toPEM(subjectCert));

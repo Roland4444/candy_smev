@@ -69,6 +69,7 @@ public class CryptoTest {
         X509Certificate rootCert = crypto.issueSelfSignedCert(root, "Root", now().plusYears(5));
         KeyPair subject = crypto.generateKeyPair();
         X509Certificate subjectCert = crypto.issueCert(root, rootCert, subject.getPublic(), "Roman Pastushkov", BigInteger.ONE, now().plusYears(1));
+        System.out.print("\nPublic>>>>>>\n"+hasher.base64(subject.getPublic().getEncoded()));
         System.out.println("cert>>>>>>>>>>>>>"+subjectCert);
         System.out.println("************************************************END CERTIFICATE*******************");
         crypto.toPEM(subjectCert);
