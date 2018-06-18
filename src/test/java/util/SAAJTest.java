@@ -30,11 +30,12 @@ public class SAAJTest {
     @Test
     public void normalSignedHash() throws Exception {
         String hashSign = "xml4test/2hashSign.xml";
+        String withIdHashSigCert = "xml4test/withIdHashSigCert.xml";
         String withIdHashSigCert4 = "xml4test/sendReqMod.xml";
         String base64HashSign = "xml4test/3base64HashSign.xml";
         SAAJ saa= new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl");
-        assertNotEquals(null, saa.send(hashSign, "responce.xml"));
-        assertNotEquals(null, saa.send(base64HashSign, "responce.xml"));
+        assertNotEquals(null, saa.send(withIdHashSigCert, "responce.xml"));
+      //  assertNotEquals(null, saa.send(base64HashSign, "responce.xml"));
 
     }
 
