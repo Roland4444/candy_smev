@@ -4,18 +4,30 @@ import org.apache.xml.security.transforms.TransformationException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.junit.Test;
+
 import util.*;
 
+import javax.xml.crypto.MarshalException;
+import javax.xml.crypto.dom.DOMStructure;
+import javax.xml.crypto.dsig.*;
+import javax.xml.crypto.dsig.dom.DOMSignContext;
+import javax.xml.crypto.dsig.keyinfo.KeyInfo;
+import javax.xml.crypto.dsig.keyinfo.KeyInfoFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.GeneralSecurityException;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.Security;
+import java.security.*;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static java.time.LocalDate.now;
 import static org.junit.Assert.*;
@@ -181,5 +193,31 @@ public class CryptoTest {
         inj.injectTagInFile(withIdHash,base64HashSign,"SignatureValue>", hasher.base64(signatureHashBase64));
     }
 
+
+ /*   @Test
+    public void testtrans() throws TransformerConfigurationException, GeneralSecurityException, MarshalException, XMLSignatureException, IOException, OperatorCreationException {
+        XMLSignatureFactory fac = XMLSignatureFactory.getInstance("DOM");
+        DigestMethod digestMethod = fac.newDigestMethod("http://www.w3.org/2000/09/xmldsig#sha1", null);
+        Reference ref = fac.newReference("#10",digestMethod);
+        ArrayList refList = new ArrayList();
+        refList.add(ref);
+        CanonicalizationMethod cm =  fac.newCanonicalizationMethod("http://www.w3.org/2001/10/xml-exc-c14n#",null);
+        SignatureMethod sm = fac.newSignatureMethod("http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411",null);
+        SignedInfo signedInfo =fac.newSignedInfo(cm,sm,refList);
+        DOMSignContext signContext = null;
+        Crypto crypto = new GOSTCrypto();
+        KeyPair root = crypto.generateKeyPair();
+        X509Certificate rootCert = crypto.issueSelfSignedCert(root, "Root", now().plusYears(5));
+        KeyPair subject = crypto.generateKeyPair();
+        X509Certificate subjectCert = crypto.issueCert(root, rootCert, subject.getPublic(), "Roman Pastushkov", BigInteger.ONE, now().plusYears(1));
+
+      /*  signContext = new DOMSignContext(subject.getPrivate(),securityHeader);
+        signContext.setURIDereferencer(new URIResolverImpl());
+        KeyInfoFactory keyFactory = KeyInfoFactory.getInstance();
+        DOMStructure domKeyInfo = new DOMStructure(tokenReference);
+        KeyInfo keyInfo = keyFactory.newKeyInfo(Collections.singletonList(domKeyInfo));
+        XMLSignature signature = fac.newXMLSignature(signedInfo,keyInfo)
+        signature.sign(signContext);  */
+  //  }
 
 }
