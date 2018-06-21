@@ -125,6 +125,7 @@ public class TransXMLTest {
         assertEquals("<>n<>n", trans.removefloatSpaces("<>  n    <>n"));
         assertEquals("<>n<>n", trans.removefloatSpaces("<>n<> n"));
         assertEquals("<>n<>n", trans.removefloatSpaces("<>n<> n    "));
+        assertEquals("<myns:rty xmlns:myns=\"http://y.e.s\">yes!</myns:rty>", trans.removefloatSpaces("  <myns:rty xmlns:myns=\"http://y.e.s\">yes!</myns:rty>"));
     }
 
 

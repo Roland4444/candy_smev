@@ -1,10 +1,13 @@
 package crypto;
 
+import org.apache.xml.security.c14n.CanonicalizationException;
+import org.apache.xml.security.c14n.InvalidCanonicalizerException;
 import org.apache.xml.security.transforms.TransformationException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.junit.Test;
 
+import org.xml.sax.SAXException;
 import util.*;
 
 import javax.xml.crypto.MarshalException;
@@ -13,6 +16,7 @@ import javax.xml.crypto.dsig.*;
 import javax.xml.crypto.dsig.dom.DOMSignContext;
 import javax.xml.crypto.dsig.keyinfo.KeyInfo;
 import javax.xml.crypto.dsig.keyinfo.KeyInfoFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -111,7 +115,7 @@ public class CryptoTest {
 
 
     @Test
-    public void signwithinjectIdatfirst() throws IOException, TransformationException, GeneralSecurityException, OperatorCreationException {
+    public void signwithinjectIdatfirst() throws IOException, TransformationException, GeneralSecurityException, OperatorCreationException, ParserConfigurationException, SAXException, CanonicalizationException, InvalidCanonicalizerException {
         Extractor ext = new Extractor();
         Injector inj = new Injector();
         transform35 trans = new transform35();
@@ -124,6 +128,7 @@ public class CryptoTest {
         String cert = "certs/certs.pem";
         String input = "xml4test/naked.xml";
         String senderData="xml4test/senderData.xml";
+        String senderData_="xml4test/senderData_.xml";
         String transformedSender="xml4test/transformedSender.xml";
         String transformedSenderwithId="xml4test/transformedSenderwithId.xml";
         String preparedT = "xml4test/nakedtranaformed.xml";
@@ -147,11 +152,13 @@ public class CryptoTest {
         FileWriter senderDatawriter = new FileWriter(senderData);
         senderDatawriter.write(ext.parse(input, "SenderProvidedRequestData"));
         senderDatawriter.close();
-        InputStream in  = new FileInputStream(senderData);
+        xmltransform transxml = new xmltransform();
+        transxml.xmldsig(senderData, senderData_);
+        InputStream in  = new FileInputStream(senderData_);
         OutputStream out  = new FileOutputStream(transformedSender);
         trans.process(in, out);
         String gen=uid.generate();
-        inj.injectTagInFile(transformedSender,transformedSenderwithId,":MessageID>",gen );
+        inj.injectTagInFile(transformedSender,transformedSenderwithId,":MessageID00000>",gen );
         org.apache.xml.security.Init.init();
         String readLine="";
         Path p = Paths.get(transformedSenderwithId);
@@ -171,7 +178,6 @@ public class CryptoTest {
         FileWriter wr2 = new FileWriter(cert);
         wr2.write(crypto.toPEM(subjectCert));
         wr2.close();
-
         System.out.println("HASH>>>\n"+hasher.h_Base64rfc2045(arr)+"\n");
         System.out.println("HASH>>>\n"+hasher.h_Base64rfc2045(stringhfromPreparedT)+"\n");
         byte[] rawSiall = crypto.sign(stringhfromPreparedT, subject.getPrivate());
@@ -183,7 +189,7 @@ public class CryptoTest {
         System.out.println("Signature>@FULL@String>>>\n"+hasher.base64(rawSiall)+"\n<<<<<");
         System.out.println("Signature>@HAsh bytes>>>\n"+hasher.base64(signatureHash)+"\n<<<<<");
         System.out.println("Signature>@Base64Hash>>>\n"+hasher.base64(signatureHashBase64)+"\n<<<<<");
-        inj.injectTagInFile(input,withId1,":MessageID>", gen);
+        inj.injectTagInFile(input,withId1,":MessageID000000>", gen); //":MessageID>"
         inj.injectTagInFile(withId1,withIdHash,"DigestValue>", hasher.h_Base64rfc2045(arr));
         inj.injectTagInFile(withIdHash,withIdHashSig,"SignatureValue>", hasher.base64(rawSiall));
         inj.injectTagInFile(withIdHashSig,withIdHashSigCert,"X509Certificate>", "");

@@ -108,7 +108,7 @@ public class Gost3411HashTest  {
 
     @Test
     public void base641getscerts() throws IOException {
-        String preparedT = "certs/certificate.der";
+        String preparedT = "certs/certs.der";
         Path p = Paths.get(preparedT);
         byte[] arr = Files.readAllBytes(p);
         Gost3411Hash hash = new Gost3411Hash();
