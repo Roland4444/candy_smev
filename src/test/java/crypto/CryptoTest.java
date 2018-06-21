@@ -193,6 +193,17 @@ public class CryptoTest {
         inj.injectTagInFile(withIdHash,base64HashSign,"SignatureValue>", hasher.base64(signatureHashBase64));
     }
 
+    @Test
+    public void genandsave() throws GeneralSecurityException, IOException, OperatorCreationException {
+        Security.addProvider(new BouncyCastleProvider());
+        String key = "certs/key.key";
+        String gencert = "certs/certs.pem";
+        KeyStore keystore = KeyStore.getInstance("PKCS12");
+        keystore.load(this.getClass().getClassLoader().getResourceAsStream("certs/123.pfx"), "1235".toCharArray());
+        PrivateKey key2 = (PrivateKey)keystore.getKey("key", "123".toCharArray());
+    }
+
+
 
  /*   @Test
     public void testtrans() throws TransformerConfigurationException, GeneralSecurityException, MarshalException, XMLSignatureException, IOException, OperatorCreationException {
