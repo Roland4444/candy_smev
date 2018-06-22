@@ -1,1 +1,17 @@
-<ns:SenderProvidedRequestData Id="SIGNED_BY_CONSUMER" xmlns="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1" xmlns:ns="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1" xmlns:ns2="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1">	<ns:MessageID>db0486d0-3c08-11e5-95e2-d4c9eff07b77</ns:MessageID><ns2:MessagePrimaryContent><ns1:BreachRequest xmlns:ns1="urn://x-artefacts-gibdd-gov-ru/breach/root/1.0"  xmlns:ns2="urn://x-artefacts-gibdd-gov-ru/breach/commons/1.0"  xmlns:ns3="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1" Id="PERSONAL_SIGNATURE"> <ns1:RequestedInformation> <ns2:RegPointNum>Т785ЕС57</ns2:RegPointNum> </ns1:RequestedInformation> <ns1:Governance> <ns2:Name>ГИБДД РФ</ns2:Name> <ns2:Code>GIBDD</ns2:Code> <ns2:OfficialPerson> <ns3:FamilyName>Загурский</ns3:FamilyName> <ns3:FirstName>Андрей</ns3:FirstName> <ns3:Patronymic>Петрович</ns3:Patronymic> </ns2:OfficialPerson></ns1:Governance> </ns1:BreachRequest> </ns2:MessagePrimaryContent>	<ns:TestMessage/></ns:SenderProvidedRequestData>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Всё то же, что в test case 1, плюс правила 3, 7 и 8:
+	- Атрибуты должны быть отсортированы в алфавитном порядке: сначала по namespace URI (если атрибут - в qualified form), затем – по local name. 
+		Атрибуты в unqualified form после сортировки идут после атрибутов в qualified form.
+	- Объявления namespace prefix должны находиться перед атрибутами. Объявления префиксов должны быть отсортированы в порядке объявления, а именно:
+		a.	Первым объявляется префикс пространства имен элемента, если он не был объявлен выше по дереву.
+		b.	Дальше объявляются префиксы пространств имен атрибутов, если они требуются. 
+			Порядок этих объявлений соответствует порядку атрибутов, отсортированных в алфавитном порядке (см. п.5).
+-->
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+
+<elementOne xmlns="http://test/1" xmlns:qwe="http://test/2" xmlns:asd="http://test/3">
+	<qwe:elementTwo>
+		<asd:elementThree xmlns:wer="http://test/a" xmlns:zxc="http://test/0" wer:attZ="zzz" attB="bbb" attA="aaa" zxc:attC="ccc" asd:attD="ddd" asd:attE="eee" qwe:attF="fff"/>
+	</qwe:elementTwo> 
+</elementOne> 
