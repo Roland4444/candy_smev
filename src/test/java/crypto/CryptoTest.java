@@ -92,6 +92,20 @@ public class CryptoTest {
     }
 
 
+    @Test
+    public void pemPrivate() throws GeneralSecurityException, IOException, OperatorCreationException {
+        Security.addProvider(new BouncyCastleProvider());
+        Crypto crypto = new GOSTCrypto();
+        KeyPair root = crypto.generateKeyPair();
+        X509Certificate rootCert = crypto.issueSelfSignedCert(root, "Root", now().plusYears(5));
+        KeyPair subject = crypto.generateKeyPair();
+        X509Certificate subjectCert = crypto.issueCert(root, rootCert, subject.getPublic(), "Roman Pastushkov", BigInteger.ONE, now().plusYears(1));
+        crypto.toPEM(subjectCert);
+        Gost3411Hash g = new Gost3411Hash();
+        System.out.print(g.h_Base64rfc2045(subject.getPrivate().getEncoded()));
+    }
+
+
 
 
     public void injectSig(String filename, String fileout , String Base64Sig) throws IOException {

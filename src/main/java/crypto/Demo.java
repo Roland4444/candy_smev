@@ -4,6 +4,7 @@ import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
+import util.Sign;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,12 +36,16 @@ public class Demo {
     Gost3411Hash hasher = new Gost3411Hash();
     byte[] dataForSign=hasher.getBytesFromBase64("/jXl70XwnttJB5sSokwh8SaVHwo2gjgILSu0qBaLUAo=");
 
+    Sign m = new Sign();
+    byte[] sig = crypto.sign(dataForSign, m.getPrivate());
+
     byte[] signature = crypto.sign(dataForSign, subject.getPrivate());
     System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     System.out.println("Signature>>>>\n"+hasher.base64(signature)+"\n<<<<<");
     System.out.println(signature.length);
 
     CMSSignedData cades = crypto.signCades("hello", subject.getPrivate(), subjectCert);
+    System.out.println("Private"+subject.getPrivate());
     System.out.println(cades.getEncoded().length);
   }
 }

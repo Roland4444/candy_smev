@@ -8,8 +8,8 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.*;
-import java.security.cert.CertificateException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -108,29 +108,11 @@ public class Gost3411HashTest  {
 
     @Test
     public void base641getscerts() throws IOException {
-        String preparedT = "certs/certs.der";
+        String preparedT = "certs/certificate.der";
         Path p = Paths.get(preparedT);
         byte[] arr = Files.readAllBytes(p);
         Gost3411Hash hash = new Gost3411Hash();
         assertNotEquals(null, hash.base64(arr));
         System.out.println(hash.base64(arr));
-    }
-
-    @Test
-    public void swapbytesTest() throws IOException {
-        byte[] message = new byte[] { (byte)'a', (byte)'b', (byte)'c',  (byte)'d',  (byte)'c',  (byte)'d'};
-        byte[] etalon = new byte[] { (byte)'b', (byte)'a', (byte)'d',  (byte)'c', (byte)'d',  (byte)'c' };
-        Gost3411Hash hash = new Gost3411Hash();
-        byte[] rs = hash.swapBytes(message);
-        for (int i = 0; i<message.length;i++){
-            assertEquals(etalon[i], rs[i]);
-        }
-    }
-
-
-    @Test
-    public void pfx12() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, IOException {
-        Gost3411Hash hash = new Gost3411Hash();
-        hash.pfx12();
     }
 }

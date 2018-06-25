@@ -30,7 +30,7 @@ public class SAAJTest {
     @Test
     public void normalSignedHash() throws Exception {
         String hashSign = "xml4test/2hashSign.xml";
-        String withIdHashSigCert = "xml4test/withIdHashSigCert.xml";
+        String withIdHashSigCert = "xml4test/razedNoAttachWithTransformReady!Result.xml";
         String withIdHashSigCert4 = "xml4test/sendReqMod.xml";
         String base64HashSign = "xml4test/3base64HashSign.xml";
         SAAJ saa= new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl");

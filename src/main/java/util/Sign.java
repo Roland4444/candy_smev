@@ -1,10 +1,9 @@
 package util;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import org.bouncycastle.openssl.PEMWriter;
+
+import java.io.*;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -15,7 +14,8 @@ public class Sign {
         KeyStore keyStore = KeyStore.getInstance("HDImageStore", "JCP");
         keyStore.load(null, null);
         char[] keyPassword = "sje2017".toCharArray();
-        PrivateKey key = (PrivateKey)keyStore.getKey("Ñàíãàäæèåâà Þëèÿ Ýðäíèåâíà 403105045", keyPassword);
+        PrivateKey key = (PrivateKey)keyStore.getKey("Сангаджиева Юлия Эрдниевна 403105045", keyPassword);
+        System.out.println(key.toString());
         return key;
     };
 
@@ -23,29 +23,35 @@ public class Sign {
         KeyStore keyStore = KeyStore.getInstance("HDImageStore", "JCP");
         keyStore.load(null, null);
         char[] keyPassword = "sje2017".toCharArray();
-        Certificate cert = (Certificate) keyStore.getCertificate("Ñàíãàäæèåâà Þëèÿ Ýðäíèåâíà 403105045");
+        Certificate cert = (Certificate) keyStore.getCertificate("Сангаджиева Юлия Эрдниевна 403105045");
         return cert;
     };
 
-    byte[] signed (String input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException {
-        byte[] result=null;
+    byte[] signed (String input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException, IOException, CertificateException {
         Signature sig = Signature.getInstance("GOST3411withGOST3410EL", "JCP");
-        KeyStore keyStore = KeyStore.getInstance("JCP");
-        try(InputStream keyStoreData = new FileInputStream("f22")){
-            keyStore.load(keyStoreData,null);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        }
-        KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry)
-                keyStore.getEntry("f22", null);
-        PrivateKey privateKey=privateKeyEntry.getPrivateKey();
-        sig.initSign(privateKey);
-        byte[] data=null;
-        sig.update(data);
+        sig.initSign(getPrivate());
+        sig.update(input.getBytes());
+        FileWriter wr = new FileWriter("certs/san.cert");
+        wr.write(toPEM(getCert()));
+        wr.close();
         return  sig.sign();
+    }
+
+    byte[] signed (byte[] input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException, IOException, CertificateException {
+        Signature sig = Signature.getInstance("GOST3411withGOST3410EL", "JCP");
+        sig.initSign(getPrivate());
+        sig.update(input);
+        FileWriter wr = new FileWriter("certs/san.cert");
+        wr.write(toPEM(getCert()));
+        wr.close();
+        return  sig.sign();
+    }
+
+    public String toPEM(Object obj) throws IOException {
+        StringWriter out = new StringWriter();
+        try (PEMWriter pem = new PEMWriter(out)) {
+            pem.writeObject(obj);
+        }
+        return out.toString();
     }
 }
