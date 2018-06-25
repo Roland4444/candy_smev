@@ -1,5 +1,6 @@
 package crypto;
 
+import chapter4.Utils;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
@@ -12,11 +13,9 @@ import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSProcessableByteArray;
-import org.bouncycastle.cms.CMSSignedData;
-import org.bouncycastle.cms.CMSSignedDataGenerator;
+import org.bouncycastle.cms.*;
 import org.bouncycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMWriter;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
@@ -24,16 +23,12 @@ import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 import org.bouncycastle.util.encoders.Base64;
 
 import javax.security.auth.x500.X500Principal;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
+import javax.xml.ws.Action;
+import java.io.*;
 import java.math.BigInteger;
-import java.security.GeneralSecurityException;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
 import java.security.cert.CertificateEncodingException;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -63,9 +58,9 @@ public abstract class Crypto {
         serial, new Date(), toDate(expiresAt), new X500Principal(subjectDn), subject);
 
     JcaX509ExtensionUtils x509Utils = new JcaX509ExtensionUtils();
-    //certGen.addExtension(basicConstraints, true, new BasicConstraints(true));
-    //certGen.addExtension(keyUsage, true, new KeyUsage(cRLSign | digitalSignature | keyCertSign));
-    //certGen.addExtension(extendedKeyUsage, true, new ExtendedKeyUsage(new KeyPurposeId[]{id_kp_OCSPSigning, id_kp_timeStamping, id_kp_codeSigning}));
+    certGen.addExtension(basicConstraints, true, new BasicConstraints(true));
+    certGen.addExtension(keyUsage, true, new KeyUsage(cRLSign | digitalSignature | keyCertSign));
+    certGen.addExtension(extendedKeyUsage, true, new ExtendedKeyUsage(new KeyPurposeId[]{id_kp_OCSPSigning, id_kp_timeStamping, id_kp_codeSigning}));
     certGen.addExtension(subjectKeyIdentifier, false, x509Utils.createSubjectKeyIdentifier(subject));
     certGen.addExtension(authorityKeyIdentifier, false, x509Utils.createAuthorityKeyIdentifier(issuer.getPublic()));
     X509CertificateHolder holder = certGen.build(getContentSigner(issuer.getPrivate()));
@@ -106,5 +101,37 @@ public abstract class Crypto {
     }
     return out.toString();
   }
+
+  @Action
+  public byte[] signEnglish(byte[] input, PrivateKey key, PublicKey check) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+    Signature signature = Signature.getInstance("ECGOST3410", "BC");
+    // generate a signature
+    signature.initSign(key, Utils.createFixedRandom());
+    Gost3411Hash hash =  new Gost3411Hash();
+    byte[] data = hash.hash_byte(input);
+    signature.update(data);
+
+    byte[]  sigBytes = signature.sign();
+
+    signature.initVerify(check);
+
+    // set the parameters
+    signature.update(data);
+
+    if (signature.verify(sigBytes)) {
+      System.out.println("signature verification succeeded.");
+
+    }
+    else
+    {
+      System.out.println("signature verification failed.");
+
+    }
+  return sigBytes;
+  }
+
+
+
+
 
 }

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tns:DOHFLNARequest xmlns:tns="urn://x-artefacts-fns-dohflna/root/260-18/4.0.1" Id="PERSONAL_SIGNATURE" ИдЗапрос="000000000000000000000000000000000001" ОтчетГод="2015">
-	<tns:СвФЛ ДатаРожд="1980-01-01" ИННФЛ="100000000074" СНИЛС="00000000000">
-		<tns:ФИОФЛ FamilyName="ИВАНОВ" FirstName="ИВАН" Patronymic="ИВАНОВИЧ"/>
-		<tns:УдЛичн DocumentCode="21" SeriesNumber="0000 000000"/>
-	</tns:СвФЛ>
-</tns:DOHFLNARequest>
