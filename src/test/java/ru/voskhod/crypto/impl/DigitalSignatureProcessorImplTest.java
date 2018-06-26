@@ -3,10 +3,16 @@ import crypto.Gost3411Hash;
 import org.bouncycastle.jcajce.provider.digest.GOST3411;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Test;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import ru.voskhod.crypto.exceptions.SignatureProcessingException;
 import util.Sign;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,9 +40,32 @@ public class DigitalSignatureProcessorImplTest {
         InputStream in = new FileInputStream("xml4test/razedNoAttachWithTransformReady!.xml");
         Gost3411Hash g = new Gost3411Hash();
         assertNotEquals(null, blob);
-        blob.signXMLDSigEnveloped("ns2:SendRequestRequest" , s.getPrivate(), (X509Certificate) s.getCert());
+    //    blob.signXMLDSigEnveloped("ns2:SendRequestRequest" , s.getPrivate(), (X509Certificate) s.getCert());
 
     }
+
+    @Test
+    public void elem() throws IOException, SignatureProcessingException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, ParserConfigurationException, SAXException {
+        org.apache.xml.security.Init.init();
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        Sign sign = new Sign();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document doc = db.parse("xml4test/razedNoAttachWithTransformReady!.xml");
+        Element root = doc.getDocumentElement();
+        NodeList sender = root.getElementsByTagName("ns1:SenderProvidedRequestData");
+        NodeList digest = root.getElementsByTagName("ns1:MessageID");
+        System.out.println(digest.item(0));
+        assertNotEquals(null, sender);
+        System.out.println(root.getTagName());
+        System.out.println(sender.item(0).getNodeValue());
+        assertNotEquals(null, root);
+        Element senderel = (Element)sender.item(0);
+        assertNotEquals(null, senderel);
+        System.out.println(senderel.getAttribute("Id"));
+        DigitalSignatureProcessorImpl pr = new DigitalSignatureProcessorImpl();
+        pr.signXMLDSigEnveloped(senderel, sign.getPrivate(), (X509Certificate) sign.getCert());
+    }
+
 
     /**
      * Подписать XML-фрагмент по технологии XMLDSig enveloped.

@@ -19,7 +19,15 @@ https://club.directum.ru/post/546
 http://khpi-iip.mipk.kharkiv.edu/library/extent/prog/iipXML/x-udom.html
 
 
+
+
+
     Info:
     raw @  cert.pem =>  <ds:X509Certificate>
     Digest = Hash @ Tranform @[{raw} SenderProvidedRequestData]
     Certificate = Public key???
+
+
+
+    Есть подозрение что поодпись считается для всего элемента а не для хеша!
+    Высадки вообще
