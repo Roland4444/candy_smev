@@ -23,7 +23,7 @@ public class SignTest {
         Sign sign = new Sign();
         Gost3411Hash g = new Gost3411Hash();
         assertNotEquals(null, sign.getPrivate());
-        System.out.print(g.h_Base64rfc2045(sign.getPrivate().getEncoded()));
+
     }
 
     @Test
@@ -66,7 +66,7 @@ public class SignTest {
         Sign sign = new Sign();
         Gost3411Hash g = new Gost3411Hash();
         byte[] hash = g.hash_byte(input);
-        assertEquals("/jXl70XwnttJB5sSokwh8SaVHwo2gjgILSu0qBaLUAo==", g.base64(hash));
+        assertEquals("/jXl70XwnttJB5sSokwh8SaVHwo2gjgILSu0qBaLUAo=", g.base64(hash));
         byte[] signature=sign.dirtysignRaw(hash);
         assertNotEquals(null, signature);
         System.out.print(g.base64(signature));

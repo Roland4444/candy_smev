@@ -16,6 +16,8 @@ TODO TASKS:
 http://www.sql.ru/forum/1193215/otpravka-gotovogo-soap-xml
 https://stackoverflow.com/questions/9203177/pkcs-7-signeddata-issue-in-bouncycastle
 https://club.directum.ru/post/546
+http://khpi-iip.mipk.kharkiv.edu/library/extent/prog/iipXML/x-udom.html
+
 
     Info:
     raw @  cert.pem =>  <ds:X509Certificate>
