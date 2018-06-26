@@ -37,6 +37,33 @@ public class Sign {
         return  sig.sign();
     }
 
+
+    byte[] dirtysigncompat(String input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException, IOException, CertificateException {
+        Signature signer = Signature.getInstance("CryptoProSignature",                "JCP");
+        signer.initSign(getPrivate());
+        signer.update(input.getBytes());
+        byte[] signature = signer.sign();
+        return signature;
+    }
+
+    byte[] dirtysign(String input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException, IOException, CertificateException {
+        Signature signer = Signature.getInstance("GOST3411withGOST3410EL",                "JCP");
+        signer.initSign(getPrivate());
+        signer.update(input.getBytes());
+        byte[] signature = signer.sign();
+        return signature;
+    }
+
+    byte[] dirtysignRaw(byte[] input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException, IOException, CertificateException {
+        Signature signer = Signature.getInstance("NONEwithGOST3410EL",                "JCP");
+        signer.initSign(getPrivate());
+        signer.update(input);
+        byte[] signature = signer.sign();
+        return signature;
+    }
+
+
+
     byte[] signed (byte[] input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException, IOException, CertificateException {
         Signature sig = Signature.getInstance("GOST3411withGOST3410EL", "JCP");
         sig.initSign(getPrivate());

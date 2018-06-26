@@ -138,7 +138,7 @@ public class transform35Test {
         String input="";
         while ((readLine = b.readLine()) != null)
             input+=readLine;
-
+        System.out.println(input);
         assertEquals("/jXl70XwnttJB5sSokwh8SaVHwo2gjgILSu0qBaLUAo=", hash.h_Base64rfc2045(input));
     }
 
