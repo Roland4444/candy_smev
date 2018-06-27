@@ -54,7 +54,7 @@ public class Sign {
         return signature;
     }
 
-    byte[] dirtysignRaw(byte[] input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException, IOException, CertificateException {
+    public byte[] dirtysignRaw(byte[] input) throws NoSuchProviderException, NoSuchAlgorithmException, SignatureException, KeyStoreException, UnrecoverableEntryException, InvalidKeyException, IOException, CertificateException {
         Signature signer = Signature.getInstance("NONEwithGOST3410EL",                "JCP");
         signer.initSign(getPrivate());
         signer.update(input);

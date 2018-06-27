@@ -3,7 +3,14 @@ import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 import util.*;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.*;
@@ -60,12 +67,38 @@ public class CryptoTest {
     }
 
     @Test
+    public void tinytest() throws GeneralSecurityException, IOException, OperatorCreationException {
+        Security.addProvider(new BouncyCastleProvider());
+        String initFile = "xml4test/razedNoAttachWithTransformReady!.xml";
+        String result = "xml4test/razedNoAttachWithTransformReady!Result.xml";
+        Gost3411Hash hasher =  new Gost3411Hash();
+        Crypto crypto = new GOSTCrypto();
+        Sign mx = new Sign();
+        KeyPair root = crypto.generateKeyPair();
+        X509Certificate rootCert = crypto.issueSelfSignedCert(root, "Root", now().plusYears(5));
+        KeyPair subject = crypto.generateKeyPair();
+        X509Certificate subjectCert = crypto.issueCert(root, rootCert, subject.getPublic(), "Roman Pastushkov", BigInteger.ONE, now().plusYears(1));
+        crypto.toPEM(subjectCert);
+        FileWriter wr = new FileWriter("certs/certTest.pem");
+        wr.write(crypto.toPEM(subjectCert));
+        wr.close();
+        Extractor ext = new Extractor();
+        String hello = ext.parse(initFile, "SenderProvidedRequestData");
+        byte[] digest = hasher.hash_byte(hello);
+        byte[] signature = mx.dirtysignRaw(digest);
+        System.out.println("hash>>\n"+hasher.base64(digest));
+        System.out.println("signature>>\n"+hasher.base64(signature));
+
+    }
+
+    @Test
     public void sihningfromFile() throws GeneralSecurityException, IOException, OperatorCreationException {
         Security.addProvider(new BouncyCastleProvider());
         String initFile = "xml4test/razedNoAttachWithTransformReady!.xml";
         String result = "xml4test/razedNoAttachWithTransformReady!Result.xml";
         Gost3411Hash hasher =  new Gost3411Hash();
         Crypto crypto = new GOSTCrypto();
+        Sign mx = new Sign();
         KeyPair root = crypto.generateKeyPair();
         X509Certificate rootCert = crypto.issueSelfSignedCert(root, "Root", now().plusYears(5));
         KeyPair subject = crypto.generateKeyPair();
@@ -105,7 +138,18 @@ public class CryptoTest {
         System.out.print(g.h_Base64rfc2045(subject.getPrivate().getEncoded()));
     }
 
-
+    @Test
+    public void readxml() throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        f.setValidating(false);
+        DocumentBuilder builder = f.newDocumentBuilder();
+        Document doc = builder.parse(new File("xml4test/razedNoAttachWithTransformReady!.xml"));
+        assertNotEquals(null, doc);
+        Element root = doc.getDocumentElement();
+        Element tosign=doc.getElementById("SIGNED_BY_CONSUMER");
+        assertNotEquals(null, tosign);
+        System.out.println("The root element is " + root.getNodeName());
+    }
 
 
     public void injectSig(String filename, String fileout , String Base64Sig) throws IOException {

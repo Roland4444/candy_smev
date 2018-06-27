@@ -2,11 +2,7 @@ package chapter4;
 
 import org.bouncycastle.jce.ECGOST3410NamedCurveTable;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
 import java.security.*;
-import java.security.spec.MGF1ParameterSpec;
-import java.security.spec.PSSParameterSpec;
-
 public class testGOST3411
 {
     public static void main(
