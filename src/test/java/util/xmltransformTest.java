@@ -30,7 +30,7 @@ public class xmltransformTest {
         String output = "xml4test/senderData_.xml";
         xmltransform trans = new xmltransform();
         trans.xmldsig(input,output);
-        transform35 test =  new transform35();
+        SmevTransformSpi test =  new SmevTransformSpi();
         InputStream in = new FileInputStream("xml4test/senderData_.xml");
         OutputStream out = new FileOutputStream("xml4test/prepared.xml");
         test.process(in, out);
@@ -40,7 +40,7 @@ public class xmltransformTest {
     @Test
     public void signedinfo() throws ParserConfigurationException, IOException, SAXException, CanonicalizationException, InvalidCanonicalizerException, TransformationException {
         org.apache.xml.security.Init.init();
-        transform35 test =  new transform35();
+        SmevTransformSpi test =  new SmevTransformSpi();
         InputStream in = new FileInputStream("xml4test/signedinfo.xml");
         OutputStream out = new FileOutputStream("xml4test/signedinfotransformed.xml");
         test.process(in, out);

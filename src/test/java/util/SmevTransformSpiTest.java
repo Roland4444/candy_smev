@@ -12,12 +12,12 @@ import java.security.NoSuchAlgorithmException;
 
 import static org.junit.Assert.*;
 
-public class transFromSuckersTest {
+public class SmevTransformSpiTest {
 
     @Test
     public void tarnsformtoSign() throws TransformationException, FileNotFoundException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         InputStream in = new FileInputStream("xml4test/SendRequestRequestNoAttach.xml");
         OutputStream out = new FileOutputStream("xml4test/TRANS.xml");
         test.process(in, out);
@@ -27,7 +27,7 @@ public class transFromSuckersTest {
     @Test
     public void tarnsformHighligthedData() throws TransformationException, FileNotFoundException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         InputStream in = new FileInputStream("xml4test/1.xml");
         OutputStream out = new FileOutputStream("xml4test/TRANS.xml");
         test.process(in, out);
@@ -36,7 +36,7 @@ public class transFromSuckersTest {
     @Test
     public void processini() throws IOException, TransformationException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/input.xml");
         String write = "<ns2:SenderProvidedRequestData xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\" Id=\"SIGNED_BY_CONSUMER\">\n" +
                 " <MessagePrimaryContent xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\">\n" +
@@ -63,7 +63,7 @@ public class transFromSuckersTest {
     @Test
     public void process() throws IOException, TransformationException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/input.xml");
         String write = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<!-- Тестирование правил 1, 2, 6: \n" +
@@ -97,7 +97,7 @@ public class transFromSuckersTest {
     @Test
     public void process2() throws IOException, TransformationException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/input.xml");
         String write = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<!-- Тестирование правил 1, 2, 6: \n" +
@@ -131,7 +131,7 @@ public class transFromSuckersTest {
     @Test
     public void process3() throws IOException, TransformationException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/input.xml");
         String write = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<!-- \n" +
@@ -174,7 +174,7 @@ public class transFromSuckersTest {
     @Test
     public void process4() throws IOException, TransformationException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/input.xml");
         String write = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<!-- \n" +
@@ -212,7 +212,7 @@ public class transFromSuckersTest {
     @Test
     public void process4testfromstupidGuide() throws IOException, TransformationException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/input.xml");
         String write = "<ns2:SenderProvidedRequestData xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.0\" Id=\"SIGNED_BY_CONSUMER\">\n" +
                 " <MessagePrimaryContent xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.0\">\n" +
@@ -243,7 +243,7 @@ public class transFromSuckersTest {
     @Test
     public void process4test2fromsHabr() throws IOException, TransformationException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/input.xml");
         String write = "<ns:SenderProvidedRequestData Id=\"SIGNED_BY_CONSUMER\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\t<ns:MessageID>db0486d0-3c08-11e5-95e2-d4c9eff07b77</ns:MessageID><ns2:MessagePrimaryContent><ns1:BreachRequest xmlns:ns1=\"urn://x-artefacts-gibdd-gov-ru/breach/root/1.0\"  xmlns:ns2=\"urn://x-artefacts-gibdd-gov-ru/breach/commons/1.0\"  xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1\" Id=\"PERSONAL_SIGNATURE\"> <ns1:RequestedInformation> <ns2:RegPointNum>Т785ЕС57</ns2:RegPointNum> </ns1:RequestedInformation> <ns1:Governance> <ns2:Name>ГИБДД РФ</ns2:Name> <ns2:Code>GIBDD</ns2:Code> <ns2:OfficialPerson> <ns3:FamilyName>Загурский</ns3:FamilyName> <ns3:FirstName>Андрей</ns3:FirstName> <ns3:Patronymic>Петрович</ns3:Patronymic> </ns2:OfficialPerson></ns1:Governance> </ns1:BreachRequest> </ns2:MessagePrimaryContent>\t<ns:TestMessage/></ns:SenderProvidedRequestData>";
         wr.write(write);
@@ -264,7 +264,7 @@ public class transFromSuckersTest {
     @Test
     public void process4testonlysenderfromsHabr() throws IOException, TransformationException, NoSuchAlgorithmException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/rawReqData.xml");
         String write = "<ns:SenderProvidedRequestData Id=\"SIGNED_BY_CONSUMER\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\t<ns:MessageID>db0486d0-3c08-11e5-95e2-d4c9eff07b77</ns:MessageID><ns2:MessagePrimaryContent><ns1:BreachRequest xmlns:ns1=\"urn://x-artefacts-gibdd-gov-ru/breach/root/1.0\"  xmlns:ns2=\"urn://x-artefacts-gibdd-gov-ru/breach/commons/1.0\"  xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1\" Id=\"PERSONAL_SIGNATURE\"> <ns1:RequestedInformation> <ns2:RegPointNum>Т785ЕС57</ns2:RegPointNum> </ns1:RequestedInformation> <ns1:Governance> <ns2:Name>ГИБДД РФ</ns2:Name> <ns2:Code>GIBDD</ns2:Code> <ns2:OfficialPerson> <ns3:FamilyName>Загурский</ns3:FamilyName> <ns3:FirstName>Андрей</ns3:FirstName> <ns3:Patronymic>Петрович</ns3:Patronymic> </ns2:OfficialPerson></ns1:Governance> </ns1:BreachRequest> </ns2:MessagePrimaryContent>\t<ns:TestMessage/></ns:SenderProvidedRequestData>";
         wr.write(write);
@@ -287,7 +287,7 @@ public class transFromSuckersTest {
     @Test
     public void process4testonlysenderfromsHabr2() throws IOException, TransformationException, NoSuchAlgorithmException {
         org.apache.xml.security.Init.init();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/rawReqData.xml");
         String write = "<ns:SenderProvidedRequestData Id=\"SIGNED_BY_CONSUMER\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\t<ns:MessageID>db0486d0-3c08-11e5-95e2-d4c9eff07b77</ns:MessageID><ns2:MessagePrimaryContent><ns1:BreachRequest xmlns:ns1=\"urn://x-artefacts-gibdd-gov-ru/breach/root/1.0\"  xmlns:ns2=\"urn://x-artefacts-gibdd-gov-ru/breach/commons/1.0\"  xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1\" Id=\"PERSONAL_SIGNATURE\"> <ns1:RequestedInformation> <ns2:RegPointNum>Т785ЕС57</ns2:RegPointNum> </ns1:RequestedInformation> <ns1:Governance> <ns2:Name>ГИБДД РФ</ns2:Name> <ns2:Code>GIBDD</ns2:Code> <ns2:OfficialPerson> <ns3:FamilyName>Загурский</ns3:FamilyName> <ns3:FirstName>Андрей</ns3:FirstName> <ns3:Patronymic>Петрович</ns3:Patronymic> </ns2:OfficialPerson></ns1:Governance> </ns1:BreachRequest> </ns2:MessagePrimaryContent>\t<ns:TestMessage/></ns:SenderProvidedRequestData>";
         wr.write(write);
@@ -312,7 +312,7 @@ public class transFromSuckersTest {
     public void fullchaintestfromHabr() throws IOException, TransformationException, NoSuchAlgorithmException {
         org.apache.xml.security.Init.init();
         Extractor ext = new Extractor();
-        transFromSuckers test =  new transFromSuckers();
+        SmevTransformSpi test =  new SmevTransformSpi();
         FileWriter wr = new FileWriter("xml4test/full.xml");
         String write = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
                 "   <S:Body>\n" +

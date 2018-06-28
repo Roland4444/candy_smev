@@ -29,7 +29,7 @@ public class ExtractorTest {
         wr.write(ext.parse("xml4test/1.xml", "SenderProvidedRequestData"));
         wr.close();
         org.apache.xml.security.Init.init();
-        transFromSuckers trans = new transFromSuckers();
+        SmevTransformSpi trans = new SmevTransformSpi();
         InputStream in  = new FileInputStream("xml4test/reqdataonly.xml");
         OutputStream out  = new FileOutputStream("xml4test/result.xml");
         trans.process(in, out);

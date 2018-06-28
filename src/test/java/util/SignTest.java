@@ -13,18 +13,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import ru.voskhod.crypto.impl.SmevTransformSpi;
 import spark.utils.IOUtils;
-
-
-import javax.xml.crypto.dsig.*;
-import javax.xml.crypto.dsig.dom.DOMSignContext;
-import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
-import javax.xml.crypto.dsig.spec.TransformParameterSpec;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -36,7 +28,6 @@ import java.nio.file.Paths;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Collections;
 
 import static org.junit.Assert.*;
 
@@ -293,7 +284,7 @@ public class SignTest {
         String outputstrans = "xml4test/boeing!c4!!tr.xml";
         xmltransform trans = new xmltransform();
         trans.xmldsig(input,output);
-        transform35 test =  new transform35();
+        SmevTransformSpi test =  new SmevTransformSpi();
         InputStream in = new FileInputStream("xml4test/razedNoAttachWithTransformReady!c4.xml");
         OutputStream out = new FileOutputStream(hotdata);
         test.process(in, out);

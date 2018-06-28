@@ -4,7 +4,7 @@ import spark.Request;
 import spark.template.velocity.VelocityTemplateEngine;
 import util.SAAJ;
 import util.timeBasedUUID;
-import util.transFromSuckers;
+import util.SmevTransformSpi;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -26,7 +26,7 @@ public class Server {
     static Map<String, Object> modelDependency = new HashMap<>();
     static ModelAndView view;
     static VelocityTemplateEngine template = new VelocityTemplateEngine();
-    static transFromSuckers trans = new transFromSuckers();
+    static SmevTransformSpi trans = new SmevTransformSpi();
     static SAAJ saa= new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl");
     static Gost3411Hash hasher = new Gost3411Hash();
     public static void main(String[] argv) {
