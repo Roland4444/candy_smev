@@ -29,7 +29,7 @@ public class SAAJTest {
 
     @Test
     public void normalSignedHash() throws Exception {
-        String withIdHashSigCert = "xml4test/result";
+        String withIdHashSigCert = "xml4test/result2.xml";
 
         SAAJ saa= new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl");
         assertNotEquals(null, saa.send(withIdHashSigCert, "responce.xml"));

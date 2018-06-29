@@ -66,30 +66,7 @@ public class CryptoTest {
 
     }
 
-    @Test
-    public void tinytest() throws GeneralSecurityException, IOException, OperatorCreationException {
-        Security.addProvider(new BouncyCastleProvider());
-        String initFile = "xml4test/razedNoAttachWithTransformReady!.xml";
-        String result = "xml4test/razedNoAttachWithTransformReady!Result.xml";
-        Gost3411Hash hasher =  new Gost3411Hash();
-        Crypto crypto = new GOSTCrypto();
-        Sign mx = new Sign();
-        KeyPair root = crypto.generateKeyPair();
-        X509Certificate rootCert = crypto.issueSelfSignedCert(root, "Root", now().plusYears(5));
-        KeyPair subject = crypto.generateKeyPair();
-        X509Certificate subjectCert = crypto.issueCert(root, rootCert, subject.getPublic(), "Roman Pastushkov", BigInteger.ONE, now().plusYears(1));
-        crypto.toPEM(subjectCert);
-        FileWriter wr = new FileWriter("certs/certTest.pem");
-        wr.write(crypto.toPEM(subjectCert));
-        wr.close();
-        Extractor ext = new Extractor();
-        String hello = ext.parse(initFile, "SenderProvidedRequestData");
-        byte[] digest = hasher.hash_byte(hello);
-        byte[] signature = mx.dirtysignRaw(digest);
-        System.out.println("hash>>\n"+hasher.base64(digest));
-        System.out.println("signature>>\n"+hasher.base64(signature));
 
-    }
 
     @Test
     public void sihningfromFile() throws GeneralSecurityException, IOException, OperatorCreationException {
