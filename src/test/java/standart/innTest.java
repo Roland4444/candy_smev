@@ -1,6 +1,7 @@
 package standart;
 
 import org.junit.Test;
+import util.SignerXML;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -24,14 +25,14 @@ public class innTest {
                 "      </ns2:SendRequestRequest>\n" +
                 "   </S:Body>\n" +
                 "</S:Envelope>";
-
         OutputStream os = new ByteArrayOutputStream();
         InputStream is = new ByteArrayInputStream(soap.getBytes());
         StreamResult sr = new StreamResult(os);
-
-        inn inn = new inn(sr);
+        SignerXML  x = new SignerXML();
+        inn inn = new inn(sr,x);
         inn.setinput(soap);
         inn.InfoToRequest=soap.getBytes();
         assertNotEquals(null, inn.SendSoapSigned());
+        System.out.print(String.valueOf(inn.SendSoapSigned()));
     }
 }

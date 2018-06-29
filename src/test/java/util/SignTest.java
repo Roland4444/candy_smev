@@ -1,6 +1,8 @@
 package util;
 
+import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
+import org.apache.xml.security.transforms.InvalidTransformException;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -15,9 +17,14 @@ import static org.junit.Assert.assertNotEquals;
 
 public class SignTest {
 
+    SignerXML n;
+    public SignTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
+        this.n = new SignerXML();
+    }
+
+
     @Test
     public void init() throws XMLSecurityException, ClassNotFoundException, SignatureProcessorException, IOException, GeneralSecurityException, TransformerException, ParserConfigurationException, SAXException, OperatorCreationException {
-        SignerXML n = new SignerXML();
         assertNotEquals(null,n);
         String data = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
                 "   <S:Body>\n" +
@@ -48,7 +55,6 @@ public class SignTest {
 
     @Test
     public void init2() throws XMLSecurityException, ClassNotFoundException, SignatureProcessorException, IOException, GeneralSecurityException, TransformerException, ParserConfigurationException, SAXException, OperatorCreationException {
-        SignerXML n = new SignerXML();
         assertNotEquals(null,n);
         String data = "\uFEFF<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
                 "  <soapenv:Header />\n" +

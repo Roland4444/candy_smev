@@ -15,10 +15,12 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public class inn extends Standart {
-    public inn(StreamResult sr){
+    public inn(StreamResult sr, SignerXML sihner){
         this.out = sr;
+        this.sihner=sihner;
     }
     private StreamSource input2;
+    private SignerXML sihner;
     private StreamResult out;
     public void setinput(String input){
       this.InfoToRequest=input.getBytes();
@@ -31,8 +33,7 @@ public class inn extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-        SignerXML sihner = new SignerXML();
-        return sihner.sign(GetSoap());
+       return sihner.sign(GetSoap());
     };
 
 

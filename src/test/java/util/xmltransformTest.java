@@ -37,16 +37,4 @@ public class xmltransformTest {
 
     }
 
-    @Test
-    public void signedinfo() throws ParserConfigurationException, IOException, SAXException, CanonicalizationException, InvalidCanonicalizerException, TransformationException {
-        org.apache.xml.security.Init.init();
-        SmevTransformSpi test =  new SmevTransformSpi();
-        InputStream in = new FileInputStream("xml4test/signedinfo.xml");
-        OutputStream out = new FileOutputStream("xml4test/signedinfotransformed.xml");
-        test.process(in, out);
-
-    }
-
-
-
 }

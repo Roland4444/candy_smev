@@ -27,6 +27,9 @@ public abstract class Standart  {
     private SAAJ saaj;
     private StreamResult out;
     public byte[] InfoToRequest;
+    public void setinput(String input){
+        this.InfoToRequest=input.getBytes();
+    }
     public abstract byte[] GetSoap();
     public abstract byte[] SignedSoap() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, XMLSecurityException, IOException, CertificateException, NoSuchAlgorithmException, TransformerException, ParserConfigurationException, UnrecoverableEntryException, NoSuchProviderException, SAXException, KeyStoreException;
     public byte[] SendSoapSigned() throws Exception {

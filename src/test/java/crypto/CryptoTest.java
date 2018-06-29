@@ -62,8 +62,6 @@ public class CryptoTest {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("Signature>>>>\n"+hasher.base64(signature)+"\n<<<<<");
         System.out.println(signature.length);
-
-
     }
 
 
@@ -113,19 +111,6 @@ public class CryptoTest {
         crypto.toPEM(subjectCert);
         Gost3411Hash g = new Gost3411Hash();
         System.out.print(g.h_Base64rfc2045(subject.getPrivate().getEncoded()));
-    }
-
-    @Test
-    public void readxml() throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-        f.setValidating(false);
-        DocumentBuilder builder = f.newDocumentBuilder();
-        Document doc = builder.parse(new File("xml4test/razedNoAttachWithTransformReady!.xml"));
-        assertNotEquals(null, doc);
-        Element root = doc.getDocumentElement();
-        Element tosign=doc.getElementById("SIGNED_BY_CONSUMER");
-        assertNotEquals(null, tosign);
-        System.out.println("The root element is " + root.getNodeName());
     }
 
 
