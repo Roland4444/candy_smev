@@ -37,6 +37,25 @@ public class SAAJTest {
 
     }
 
+    @Test
+    public void normalSignedH22ash() throws Exception {
+        String withIdHashSigCert = "xml4test/result.xml";
+
+        SAAJ saa= new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl");
+        assertNotEquals(null, saa.send(withIdHashSigCert, "responce.xml"));
+        //  assertNotEquals(null, saa.send(base64HashSign, "responce.xml"));
+
+    }
+
+    @Test
+    public void sendvipiop() throws Exception {
+        String withIdHashSigCert = "xml4test/resultvipip.xml";
+        SAAJ saa= new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl");
+        assertNotEquals(null, saa.send(withIdHashSigCert, "responce.xml"));
+        //  assertNotEquals(null, saa.send(base64HashSign, "responce.xml"));
+
+    }
+
 
 
 }

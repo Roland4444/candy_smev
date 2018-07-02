@@ -22,10 +22,6 @@ public class inn extends Standart {
     private StreamSource input2;
     private SignerXML sihner;
     private StreamResult out;
-    public void setinput(String input){
-      this.InfoToRequest=input.getBytes();
-    }
-
     public byte[] GetSoap(){
         return InfoToRequest;
     };
