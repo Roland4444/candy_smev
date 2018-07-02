@@ -28,8 +28,8 @@ public abstract class Standart  {
     }
     private SAAJ saaj;
     private StreamResult out;
-    private Injector inj=new Injector();
-    private timeBasedUUID gen = new timeBasedUUID();
+    protected Injector inj=new Injector();
+    protected timeBasedUUID gen = new timeBasedUUID();
     public byte[] InfoToRequest;
     public void setinput(String input) throws IOException {
         String dwithId0 = inj.injectTag(input, ":MessageID>",gen.generate());

@@ -3,6 +3,27 @@ package util;
 import java.io.*;
 
 public class Injector {
+    public String injectAttribute(String input, String AttributeName, String valueToInject){
+        String result="";
+        int pStart=input.indexOf(AttributeName);
+        if (pStart==-1) return input;
+        for (int i= 0; i<pStart; i++)
+            result+=input.charAt(i);
+        int offset=0;
+        int offset2=0;
+        while (input.charAt(pStart+offset)!='"'){
+            result+=input.charAt(pStart+offset);
+            offset++;
+        }
+        result+=input.charAt(pStart+offset);
+        result+=valueToInject;
+        offset++;
+        while (input.charAt(pStart+offset+offset2)!='"') offset2++;
+        for (int i= pStart+offset+offset2; i<=input.length()-1;i++)
+            result+=input.charAt(i);
+        return result;
+    }
+
     public String injectTag(String input, String TagwithclosedEmbrace, String valueToInject){
         String result="";
         int pStart=input.indexOf(TagwithclosedEmbrace);
@@ -96,7 +117,6 @@ public class Injector {
         while (input.charAt(startpos)!='>') startpos++;
         startpos++;
         while (input.charAt(stoppos)!='<') stoppos--;
-
         StringBuffer strBuffer = new StringBuffer();
         strBuffer.append(input.substring(0, startpos));
         strBuffer.append(input.substring(stoppos, input.length()));

@@ -1,8 +1,10 @@
 package standart;
+
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
 import util.SignatureProcessorException;
 import util.SignerXML;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamResult;
@@ -14,8 +16,8 @@ import java.security.NoSuchProviderException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
-public class inn extends Standart {
-    public inn(StreamResult sr, SignerXML sihner){
+public class egrip extends Standart {
+    public egrip(StreamResult sr, SignerXML sihner){
         this.out = sr;
         this.sihner=sihner;
     }
@@ -26,7 +28,7 @@ public class inn extends Standart {
         String genned= gen.generate();
         String dwithId0 = inj.injectTag(input, ":MessageID>",genned);
         String dwithId = inj.flushTagData(dwithId0, "CallerInformationSystemSignature");
-       // String wiNumberDeal = inj.injectAttribute(dwithId,"ИдДок", genned);
+    //    String wiNumberDeal = inj.injectAttribute(dwithId,"ИдДок", genned);
         this.InfoToRequest=dwithId.getBytes();
     }
     public byte[] GetSoap(){

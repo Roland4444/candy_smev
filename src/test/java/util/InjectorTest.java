@@ -225,4 +225,22 @@ public class InjectorTest {
         String Etalon =  "<x1><x2></x2></x1>";
         assertEquals(Etalon, inj.flushTagData(data, "x2"));
     }
+
+    @Test
+    public void injectAttribute() {
+        Injector inj = new Injector();
+        String data =  "<x1><x2 id=\"\"><bull>5444545454</bull></x2></x1>";
+        String Etalon =  "<x1><x2 id=\"12\"><bull>5444545454</bull></x2></x1>";
+        assertEquals(Etalon, inj.injectAttribute(data, "id", "12"));
+    }
+
+
+
+    @Test
+    public void injectAttribute2() {
+        Injector inj = new Injector();
+        String data =       "<bull if=\"122\">5444545454</bull>";
+        String Etalon =     "<bull if=\"155\">5444545454</bull>";
+        assertEquals(Etalon, inj.injectAttribute(data, "if", "155"));
+    }
 }
