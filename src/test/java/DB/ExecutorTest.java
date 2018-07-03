@@ -32,5 +32,27 @@ public class ExecutorTest {
             System.out.print(res);
         }
         wr.close();
+
     }
+
+    @Test
+    public void submit2() throws SQLException, IOException {
+        Readfile r = new Readfile("sqlset");
+        Executor f = new Executor(r.read(), true);
+        buildSql sql = new buildSql("3567");
+        assertNotEquals(null, f.submit(sql.result()) );
+        FileWriter wr = new FileWriter("xml4test/1637006.xml");
+        ResultSet Select2 = f.submit("set concat_null_yields_null off; SELECT f_body_xml FROM gis_files WHERE f_key='1637006';");
+        Gost3411Hash gost = new Gost3411Hash();
+        if (Select2.next()){
+            String res =Select2.getString("f_body_xml");
+            System.out.print(res);
+            wr.write(res);
+        }
+        wr.close();
+
+    }
+
+
+
 }

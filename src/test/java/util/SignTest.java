@@ -34,7 +34,7 @@ public class SignTest {
                 "      </ns2:SendRequestRequest>\n" +
                 "   </S:Body>\n" +
                 "</S:Envelope>";
-        byte[] signature=n.sign(data.getBytes());
+        byte[] signature=n.signcallerns2(data.getBytes());
         assertNotEquals(null, signature);
         FileOutputStream fileOuputStream = null;
         try {
@@ -81,7 +81,7 @@ public class SignTest {
                 "</S:Envelope>";
         String dwithId = parcer.injectTag(data, ":MessageID>",gen.generate());
 
-        byte[] signature=n.sign(dwithId.getBytes());
+        byte[] signature=n.signcallerns2(dwithId.getBytes());
         assertNotEquals(null, signature);
         FileOutputStream fileOuputStream = null;
         try {
@@ -137,7 +137,7 @@ public class SignTest {
                 "    </ns:GetResponseRequest>\n" +
                 "  </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
-        byte[] signature=n.signcaller(data.getBytes());
+        byte[] signature=n.signcallerns4(data.getBytes());
         assertNotEquals(null, signature);
         FileOutputStream fileOuputStream = null;
         try {

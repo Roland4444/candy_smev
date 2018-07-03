@@ -38,7 +38,7 @@ public class egrip extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-       return sihner.sign(GetSoap());
+       return sihner.signcallerns2(GetSoap());
     };
 
 

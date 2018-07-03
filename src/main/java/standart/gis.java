@@ -14,8 +14,8 @@ import java.security.NoSuchProviderException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
-public class inn extends Standart {
-    public inn(StreamResult sr, SignerXML sihner){
+public class gis extends Standart {
+    public gis(StreamResult sr, SignerXML sihner){
         this.out = sr;
         this.sihner=sihner;
     }
@@ -26,7 +26,7 @@ public class inn extends Standart {
         String genned= gen.generate();
         String dwithId0 = inj.injectTag(input, ":MessageID>",genned);
         String dwithId = inj.flushTagData(dwithId0, "CallerInformationSystemSignature");
-       // String wiNumberDeal = inj.injectAttribute(dwithId,"ИдДок", genned);
+        // String wiNumberDeal = inj.injectAttribute(dwithId,"ИдДок", genned);
         this.InfoToRequest=dwithId.getBytes();
     }
     public byte[] GetSoap(){
@@ -36,7 +36,7 @@ public class inn extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-       return sihner.signcallerns2(GetSoap());
+        return sihner.signcallerns4(sihner.personalsign(GetSoap()));
     };
 
 
