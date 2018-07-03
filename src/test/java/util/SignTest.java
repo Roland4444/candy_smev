@@ -22,8 +22,6 @@ public class SignTest {
 
     public SignTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
     }
-
-
     @Test
     public void init() throws XMLSecurityException, ClassNotFoundException, SignatureProcessorException, IOException, GeneralSecurityException, TransformerException, ParserConfigurationException, SAXException, OperatorCreationException {
         assertNotEquals(null,n);
@@ -100,9 +98,6 @@ public class SignTest {
             }
         }
     }
-
-
-
     @Test
     public void cert(){
         byte[]           input = new byte[] { (byte)0xbe, (byte)0xef };
