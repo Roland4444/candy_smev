@@ -44,6 +44,7 @@ public class SignerXML {
     private Sign x = new Sign();
     public SignerXML() throws InvalidTransformException, AlgorithmAlreadyRegisteredException, ClassNotFoundException, SignatureProcessorException {
         ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();
+        System.out.println("register!");
         Transform.register(SmevTransformSpi.ALGORITHM_URN, SmevTransformSpi.class.getName());
         santuarioIgnoreLineBreaks(true);
     }

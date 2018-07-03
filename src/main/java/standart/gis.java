@@ -20,7 +20,7 @@ public class gis extends Standart {
         this.out = sr;
         this.sihner=sihner;
         this.personal=personal;
-        this.full=full;
+        this.full=Full;
     }
     private StreamSource input2;
     private SignerXML sihner;
