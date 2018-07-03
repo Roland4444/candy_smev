@@ -3,6 +3,7 @@ package standart;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
+import util.Sign;
 import util.SignatureProcessorException;
 import util.SignerXML;
 
@@ -14,7 +15,7 @@ import java.io.OutputStream;
 import static org.junit.Assert.*;
 
 public class egripTest {
-
+Sign signer = new Sign();
     @Test
     public void sendEgrip() throws Exception {
         String data = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
@@ -39,7 +40,7 @@ public class egripTest {
         OutputStream os = new ByteArrayOutputStream();
         StreamResult sr = new StreamResult(os);
         SignerXML x = new SignerXML();
-        egrip inn = new egrip(sr,x);
+        egrip inn = new egrip(sr,x, signer);
         inn.setinput(data);
         assertNotEquals(null, inn.SendSoapSigned());
         System.out.print(String.valueOf(inn.SendSoapSigned()));

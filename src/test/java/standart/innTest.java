@@ -2,6 +2,7 @@ package standart;
 
 import org.junit.Test;
 import util.Injector;
+import util.Sign;
 import util.SignerXML;
 import util.timeBasedUUID;
 
@@ -16,6 +17,7 @@ import java.io.*;
 import static org.junit.Assert.*;
 
 public class innTest {
+    Sign signer = new Sign();
 
     @Test
     public void signedSoap() throws Exception {
@@ -31,7 +33,7 @@ public class innTest {
         InputStream is = new ByteArrayInputStream(soap.getBytes());
         StreamResult sr = new StreamResult(os);
         SignerXML  x = new SignerXML();
-        inn inn = new inn(sr,x);
+        inn inn = new inn(sr,x, signer);
         inn.setinput(soap);
         inn.InfoToRequest=soap.getBytes();
         assertNotEquals(null, inn.SendSoapSigned());
@@ -52,7 +54,7 @@ public class innTest {
         InputStream is = new ByteArrayInputStream(soap.getBytes());
         StreamResult sr = new StreamResult(os);
         SignerXML  x = new SignerXML();
-        inn inn = new inn(sr,x);
+        inn inn = new inn(sr,x, signer);
         inn.setinput(soap);
         //inn.InfoToRequest=soap.getBytes();
         assertNotEquals(null, inn.SendSoapSigned());
@@ -170,7 +172,7 @@ public class innTest {
         OutputStream os = new ByteArrayOutputStream();
         StreamResult sr = new StreamResult(os);
         SignerXML  x = new SignerXML();
-        inn inn = new inn(sr,x);
+        inn inn = new inn(sr,x, signer);
         inn.setinput(data);
         assertNotEquals(null, inn.SendSoapSigned());
         System.out.print(String.valueOf(inn.SendSoapSigned()));
@@ -200,7 +202,7 @@ public class innTest {
         OutputStream os = new ByteArrayOutputStream();
         StreamResult sr = new StreamResult(os);
         SignerXML  x = new SignerXML();
-        inn inn = new inn(sr,x);
+        inn inn = new inn(sr,x, signer);
         inn.setinput(data);
         assertNotEquals(null, inn.SendSoapSigned());
         System.out.print(String.valueOf(inn.SendSoapSigned()));

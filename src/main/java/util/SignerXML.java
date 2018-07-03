@@ -41,6 +41,7 @@ public class SignerXML {
     private static final String COULD_NOT_FIND_XML_ELEMENT_NAME = "ERROR! Could not find xmlElementName = ";
     private static final String GRID = "#";
     private static final String XML_SIGNATURE_ERROR = "xmlDSignature ERROR: ";
+    private Sign x = new Sign();
     public SignerXML() throws InvalidTransformException, AlgorithmAlreadyRegisteredException, ClassNotFoundException, SignatureProcessorException {
         ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();
         Transform.register(SmevTransformSpi.ALGORITHM_URN, SmevTransformSpi.class.getName());
@@ -69,11 +70,9 @@ public class SignerXML {
         }
     }
 
-
-    public byte[] sign(byte[] data, String xmlElementName, String xmlElementID ) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, UnrecoverableEntryException, IOException, SAXException, ParserConfigurationException, XMLSecurityException, TransformerException {
-        Sign x = new Sign();
-        X509Certificate certificate=(X509Certificate)x.getCert();
-        PrivateKey privateKey=x.getPrivate();
+    public byte[] sign(Sign signer, byte[] data, String xmlElementName, String xmlElementID ) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, UnrecoverableEntryException, IOException, SAXException, ParserConfigurationException, XMLSecurityException, TransformerException {
+        X509Certificate certificate=(X509Certificate)signer.getCert();
+        PrivateKey privateKey=signer.getPrivate();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setIgnoringElementContentWhitespace(true);
         dbf.setCoalescing(true);
@@ -110,15 +109,16 @@ public class SignerXML {
         return bais.toByteArray();
     }
 
-    public byte[] signcallerns4(byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
-       return sign(data, "ns4:CallerInformationSystemSignature", "SIGNED_BY_CONSUMER" );
+
+    public byte[] signcallerns4(Sign signer, byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
+       return sign(signer, data, "ns4:CallerInformationSystemSignature", "SIGNED_BY_CONSUMER" );
     }
 
-    public byte[] signcallerns2(byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
-        return sign(data, "ns2:CallerInformationSystemSignature", "SIGNED_BY_CONSUMER" );
+    public byte[] signcallerns2(Sign signer, byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
+        return sign(signer, data, "ns2:CallerInformationSystemSignature", "SIGNED_BY_CONSUMER" );
     }
 
-    public byte[] personalsign(byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
-        return sign(data, "ns:PersonalSignature", "PERSONAL_SIGNATURE" );
+    public byte[] personalsign(Sign signer, byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
+        return sign(signer, data, "ns:PersonalSignature", "PERSONAL_SIGNATURE" );
     }
 }

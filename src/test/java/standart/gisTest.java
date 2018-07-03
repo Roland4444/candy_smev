@@ -3,6 +3,7 @@ package standart;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
+import util.Sign;
 import util.SignatureProcessorException;
 import util.SignerXML;
 
@@ -14,7 +15,7 @@ import java.io.OutputStream;
 import static org.junit.Assert.*;
 
 public class gisTest {
-
+Sign s = new Sign();
 
     @Test
     public void sendJKH() throws Exception {
@@ -22,7 +23,7 @@ public class gisTest {
         OutputStream os = new ByteArrayOutputStream();
         StreamResult sr = new StreamResult(os);
         SignerXML x = new SignerXML();
-        egrip inn = new egrip(sr,x);
+        egrip inn = new egrip(sr,x, s);
         inn.setinput(data);
         assertNotEquals(null, inn.SendSoapSigned());
        // System.out.print(String.valueOf(inn.SendSoapSigned()));
@@ -34,7 +35,7 @@ public class gisTest {
         OutputStream os = new ByteArrayOutputStream();
         StreamResult sr = new StreamResult(os);
         SignerXML  x = new SignerXML();
-        gis gis = new gis(sr,x);
+        gis gis = new gis(sr,x, s, s);
         gis.setinput(data);
         assertNotEquals(null, gis.SendSoapSigned());
         System.out.print(String.valueOf(gis.SendSoapSigned()));

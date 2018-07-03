@@ -1,6 +1,7 @@
 package standart;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
+import util.Sign;
 import util.SignatureProcessorException;
 import util.SignerXML;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,13 +16,18 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public class gis extends Standart {
-    public gis(StreamResult sr, SignerXML sihner){
+    public gis(StreamResult sr, SignerXML sihner, Sign personal, Sign Full){
         this.out = sr;
         this.sihner=sihner;
+        this.personal=personal;
+        this.full=full;
     }
     private StreamSource input2;
     private SignerXML sihner;
     private StreamResult out;
+    private Sign personal;
+    private Sign full;
+
     public void setinput(String input) throws IOException {
         String genned= gen.generate();
         String dwithId0 = inj.injectTag(input, ":MessageID>",genned);
@@ -36,7 +42,7 @@ public class gis extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-        return sihner.signcallerns4(sihner.personalsign(GetSoap()));
+        return sihner.signcallerns4(full, sihner.personalsign(personal, GetSoap()));
     };
 
 

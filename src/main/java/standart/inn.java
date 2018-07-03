@@ -1,6 +1,7 @@
 package standart;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
+import util.Sign;
 import util.SignatureProcessorException;
 import util.SignerXML;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,10 +16,12 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public class inn extends Standart {
-    public inn(StreamResult sr, SignerXML sihner){
+    public inn(StreamResult sr, SignerXML sihner, Sign signer){
         this.out = sr;
         this.sihner=sihner;
+        this.signer = signer;
     }
+    private Sign signer;
     private StreamSource input2;
     private SignerXML sihner;
     private StreamResult out;
@@ -36,7 +39,7 @@ public class inn extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-       return sihner.signcallerns2(GetSoap());
+       return sihner.signcallerns2(signer, GetSoap());
     };
 
 
