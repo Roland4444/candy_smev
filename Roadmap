@@ -10,9 +10,11 @@ Whats done:
  	Signing with CryptoPro JCP
 
 TODO TASKS:
-need pass full tests!
+    need pass full tests!
     https://smev3.gosuslugi.ru/portal/inquirytype_one.jsp?zone=fed&id=81435
 
+гис гмп протестирован 300 запросов за 200 секунд/sendrequestrequest ;
+sendrequest; getresponserequest; ackReq;
 
 http://www.sql.ru/forum/1193215/otpravka-gotovogo-soap-xml
 https://stackoverflow.com/questions/9203177/pkcs-7-signeddata-issue-in-bouncycastle
