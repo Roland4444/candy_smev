@@ -62,6 +62,22 @@ public class InjectorTest {
     }
 
     @Test
+    public void injectTagInFile4() throws IOException {
+        Injector parcer = new Injector();
+        timeBasedUUID gen = new timeBasedUUID();
+        String dataInject = gen.generate();
+        System.out.println(dataInject);
+        parcer.injectTagInFile("xml4test/removedMessage.xml","xml4test/check.xml",":MessageID>", dataInject);
+        Extractor ext = new Extractor();
+        String result=ext.parse("xml4test/check.xml", "MessageID");
+        assertTrue(result.indexOf(dataInject)>0);
+        assertEquals(dataInject, ext.extractRaw("xml4test/check.xml", "MessageID"));
+        System.out.println(ext.extractRaw("xml4test/check.xml", "MessageID"));
+    }
+
+
+
+    @Test
     public void cert() throws IOException {
         String cert = "certs/certs.pem";
         Injector inj = new Injector();
@@ -243,4 +259,15 @@ public class InjectorTest {
         String Etalon =     "<bull if=\"155\">5444545454</bull>";
         assertEquals(Etalon, inj.injectAttribute(data, "if", "155"));
     }
+
+    @Test
+    public void injectTag1() {
+        Injector inj = new Injector();
+        String input = "<bs  xm=\"12\">12</bs>";
+        String etalon = "<bs  xm=\"12\">16</bs>";
+        assertEquals(etalon, inj.injectTagDirect(input, "bs", "16"));
+
+    }
+
+
 }

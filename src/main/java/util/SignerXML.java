@@ -115,6 +115,14 @@ public class SignerXML {
        return sign(signer, data, "ns4:CallerInformationSystemSignature", "SIGNED_BY_CONSUMER" );
     }
 
+    public byte[] signcallerns4bycaller(Sign signer, byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
+        return sign(signer, data, "ns4:CallerInformationSystemSignature", "SIGNED_BY_CALLER" );
+    }
+
+
+    public byte[] signcallernsbycaller(Sign signer, byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
+        return sign(signer, data, "ns:CallerInformationSystemSignature", "SIGNED_BY_CALLER" );
+    }
     public byte[] signcallerns2(Sign signer, byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
         return sign(signer, data, "ns2:CallerInformationSystemSignature", "SIGNED_BY_CONSUMER" );
     }

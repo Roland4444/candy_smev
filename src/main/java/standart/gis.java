@@ -8,7 +8,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -30,9 +32,10 @@ public class gis extends Standart {
 
     public void setinput(String input) throws IOException {
         String genned= gen.generate();
+        System.out.println(genned);
         String dwithId0 = inj.injectTag(input, ":MessageID>",genned);
         String dwithId = inj.flushTagData(dwithId0, "CallerInformationSystemSignature");
-        // String wiNumberDeal = inj.injectAttribute(dwithId,"ИдДок", genned);
+        //String wiNumberDeal = inj.injectAttribute(dwithId,"ИдДок", genned);
         this.InfoToRequest=dwithId.getBytes();
     }
     public byte[] GetSoap(){
@@ -44,6 +47,24 @@ public class gis extends Standart {
             NoSuchProviderException, SAXException, KeyStoreException {
         return sihner.signcallerns4(full, sihner.personalsign(personal, GetSoap()));
     };
+
+    public byte[] GetResponseRequest() throws Exception {
+        InputStream in = new ByteArrayInputStream(sihner.signcallerns4bycaller(full, GetSoap()));
+        StreamSource input=new StreamSource(in);
+        return this.saaj.send(input);
+    }
+
+    public byte[] GetResponseRequestwoFilter() throws Exception {
+        InputStream in = new ByteArrayInputStream(sihner.signcallernsbycaller(full, GetSoap()));
+        StreamSource input=new StreamSource(in);
+        return this.saaj.send(input);
+    }
+
+    public byte[] ack() throws Exception {
+        InputStream in = new ByteArrayInputStream(sihner.signcallerns4bycaller(full, GetSoap()));
+        StreamSource input=new StreamSource(in);
+        return this.saaj.send(input);
+    }
 
 
 }

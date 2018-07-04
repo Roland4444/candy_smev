@@ -38,6 +38,20 @@ public class Injector {
         return result;
     }
 
+    public String injectTagDirect(String input, String TagRawName, String valueToInject){
+        StringBuffer result=new StringBuffer();
+        int pStart=input.indexOf(TagRawName);
+        if (pStart==-1) return input;
+        int shift=0;
+        while (input.charAt(pStart+(shift++))!='>') {}
+        result.append(input.substring(0, pStart+(shift)));
+        result.append(valueToInject);
+        shift--;
+        while (input.charAt(pStart+(shift++))!='<') {}
+        result.append(input.substring(pStart+(shift)-1, input.length()));
+        return result.toString();
+    }
+
     public void injectTagInFile(String input, String output, String TagwithclosedEmbrace, String valueToInject) throws IOException {
         FileWriter wr = new FileWriter(output);
         BufferedReader b = new BufferedReader(new FileReader(input));
