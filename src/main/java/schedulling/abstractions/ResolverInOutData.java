@@ -1,6 +1,8 @@
-package schedulling;
+package schedulling.abstractions;
 
 import standart.Standart;
+
+import java.io.IOException;
 
 public abstract class ResolverInOutData {
     public Standart operator;
@@ -11,5 +13,5 @@ public abstract class ResolverInOutData {
         this.DataToWork = input;
     }
     public byte[] DataToWork;
-    public abstract void putResult();
+    public abstract void putResult() throws IOException;
 }

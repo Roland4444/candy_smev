@@ -1,10 +1,4 @@
 package crypto;
-
-
-import chapter4.Utils;
-import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.ExtendedKeyUsage;
 import org.bouncycastle.asn1.x509.KeyPurposeId;
@@ -16,20 +10,15 @@ import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.cms.*;
 import org.bouncycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMWriter;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
-import org.bouncycastle.util.encoders.Base64;
-
 import javax.security.auth.x500.X500Principal;
-import javax.xml.ws.Action;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.CertificateEncodingException;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -103,33 +92,7 @@ public abstract class Crypto {
     return out.toString();
   }
 
-  @Action
-  public byte[] signEnglish(byte[] input, PrivateKey key, PublicKey check) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-    Signature signature = Signature.getInstance("ECGOST3410", "BC");
-    // generate a signature
-    signature.initSign(key, Utils.createFixedRandom());
-    Gost3411Hash hash =  new Gost3411Hash();
-    byte[] data = hash.hash_byte(input);
-    signature.update(data);
 
-    byte[]  sigBytes = signature.sign();
-
-    signature.initVerify(check);
-
-    // set the parameters
-    signature.update(data);
-
-    if (signature.verify(sigBytes)) {
-      System.out.println("signature verification succeeded.");
-
-    }
-    else
-    {
-      System.out.println("signature verification failed.");
-
-    }
-  return sigBytes;
-  }
 
 
 

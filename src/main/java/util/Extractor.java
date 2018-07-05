@@ -9,6 +9,17 @@ public class Extractor {
     public Extractor(){
     }
 
+    public String extractTagValue(String input, String TagName){
+        int pStart=input.indexOf(TagName);
+        if (pStart==-1) return null;
+        int offset=0;
+        int addOffset=0;
+        while (input.charAt(pStart+(offset++))!='>') {};
+        while (input.charAt(pStart+offset+(addOffset++))!='<') {};
+        addOffset--;
+        return input.substring(pStart+offset, pStart+offset+addOffset);
+    }
+
     public String parse(String FileName, String tagToFind) throws IOException {
         String result="";
         String input="";

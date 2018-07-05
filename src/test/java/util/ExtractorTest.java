@@ -68,4 +68,11 @@ public class ExtractorTest {
         wr.close();
         assertEquals("12", ext.extractRaw("xml4test/raww.xml", "Sender"));
     }
+
+    @Test
+    public void extractTagValue() {
+        Extractor extractor = new Extractor();
+        String data  = "aaaa<br>67586</br>";
+        assertEquals("67586", extractor.extractTagValue(data, "br"));
+    }
 }
