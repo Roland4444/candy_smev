@@ -6,6 +6,9 @@ import java.io.IOException;
 
 public abstract class ResolverInOutData {
     public Standart operator;
+    public Standart getOperator(){
+        return this.operator;
+    }
     public void setOperator(Standart operator){
         this.operator=operator;
     };

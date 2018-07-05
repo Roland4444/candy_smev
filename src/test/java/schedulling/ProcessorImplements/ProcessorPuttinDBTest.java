@@ -34,4 +34,8 @@ public class ProcessorPuttinDBTest {
         pst.setObject(3, "000");
        // pst.execute();
     }
+
+    @Test
+    public void run1() {
+    }
 }

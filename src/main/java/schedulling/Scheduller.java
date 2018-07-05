@@ -1,15 +1,18 @@
 package schedulling;
 
 import DB.Executor;
+import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
+import org.apache.xml.security.transforms.InvalidTransformException;
 import readfile.Readfile;
 import schedulling.ProcessorImplements.ProcessorPuttinDB;
 import schedulling.TaskerImplements.TaskerFromDB;
-import schedulling.abstractions.Controller;
-import schedulling.abstractions.DataMapContainer;
-import schedulling.abstractions.Processor;
-import schedulling.abstractions.Tasker;
-import util.Extractor;
+import schedulling.abstractions.*;
+import standart.gis;
+import util.*;
 
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.sql.SQLException;
 
 import static java.lang.Thread.sleep;
@@ -20,11 +23,9 @@ public class Scheduller implements Controller {
     public Executor executor;
     public Extractor ext;
     public DataMapContainer datamap;
-    public Scheduller() throws SQLException {
-        this.datamap=new DataMapContainer();
-        this.ext=new Extractor();
-        Readfile r = new Readfile("sqlset");
-        this.executor=new Executor(r.read(), true);
+    public DependencyContainer deps;
+    public Scheduller(DependencyContainer deps) throws SQLException, ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
+       this.deps = deps;
     }
     public void setTasker() throws SQLException {
         this.tasker= new TaskerFromDB(this.executor);
