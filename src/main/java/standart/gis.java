@@ -38,7 +38,7 @@ public class gis extends Standart {
         //String wiNumberDeal = inj.injectAttribute(dwithId,"ИдДок", genned);
         this.InfoToRequest=dwithId.getBytes();
     }
-    public byte[] GetSoap(){
+    public  byte[] GetSoap(){
         return InfoToRequest;
     };
     public byte[] SignedSoap() throws ClassNotFoundException, SignatureProcessorException, XMLSecurityException,

@@ -39,7 +39,7 @@ public abstract class Standart  {
     }
     public abstract byte[] GetSoap();
     public abstract byte[] SignedSoap() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, XMLSecurityException, IOException, CertificateException, NoSuchAlgorithmException, TransformerException, ParserConfigurationException, UnrecoverableEntryException, NoSuchProviderException, SAXException, KeyStoreException;
-    public abstract byte[] SendRequestRequest();
+  //  public abstract byte[] SendRequestRequest();
 
     public byte[] SendSoapSigned() throws Exception {
        InputStream in = new ByteArrayInputStream(SignedSoap());
