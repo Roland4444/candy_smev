@@ -26,24 +26,15 @@ public class SchedullerTest {
 
     @Test
     public void setTasker() throws SQLException {
-        sch.setTasker();
-        sch.setProcessor();
+
         assertNotEquals(null, sch);
-        assertNotEquals(null, sch.getProcessor());
-        assertNotEquals(null, sch.getTasker());
+        assertNotEquals(null, sch.processor);
+        assertNotEquals(null, sch.tasker);
     }
 
-    @Test
-    public void run() throws InterruptedException, SQLException {
-        sch.setTasker();
-        sch.setProcessor();
-        sch.run();
-    }
 
     @Test
     public void run1() throws SQLException, InterruptedException {
-        sch.setTasker();
-        sch.setProcessor();
         sch.run();
         String msgIOd="f6a09006-689a-11e8-8058-012ae3068118";
         assertNotEquals(null, sch.deps.datamap.DataConveer.get(msgIOd));
@@ -57,8 +48,6 @@ public class SchedullerTest {
 
     @Test
     public void run2() throws SQLException, InterruptedException {
-        sch.setTasker();
-        sch.setProcessor();
         sch.run(2);
         String msgIOd="f6a09006-689a-11e8-8058-012ae3068118";
         assertNotEquals(null, sch.deps.datamap.DataConveer.get(msgIOd));
@@ -92,9 +81,13 @@ public class SchedullerTest {
             assertNotEquals(null, resolver.getOperator());
             if (resolver.getOperator().equals("gis")) {
                 deps.gis.setinput(new String(resolver.DataToWork));
-                if (new String(deps.gis.SendSoapSigned()).indexOf("requestIsQueued")>0 )
-                    System.out.print("Succesfully QUEED");
-                else System.out.print("err on  QUEEDing");
+                if (new String(deps.gis.SendSoapSigned()).indexOf("requestIsQueued")>0 ){
+                    assertNotEquals(null, sch.processor);
+                    sch.processor.succesquued();
+                }
+
+                else sch.processor.errorquued();
+
             }
 
 
@@ -102,8 +95,6 @@ public class SchedullerTest {
          //   resolver.getOperator().SendSoapSigned();
             it.remove(); // avoids a ConcurrentModificationException
         }
-        sch.setTasker();
-        sch.setProcessor();
         sch.run(2);
     }
 

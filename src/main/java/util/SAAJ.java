@@ -97,7 +97,7 @@ public class SAAJ {
         soapPart.setContent(preppedMsgSrc);
         message.saveChanges();
     //    System.out.println("\nREQUEST:\n");
-        message.writeTo(System.out);
+    //    message.writeTo(System.out);
     //    System.out.println();
         SOAPMessage reply = connection.call(message, this.url);
         return createSoapResponse(reply);

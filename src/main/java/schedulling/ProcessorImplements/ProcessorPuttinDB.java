@@ -18,6 +18,14 @@ public class ProcessorPuttinDB implements Processor {
         this.deps=deps;
     }
 
+    public void succesquued(){
+        System.out.println("sucess!");
+    }
+
+    public void errorquued(){
+        System.out.println("error!");
+    }
+
     public void run(){/*
         System.out.println("in processor==>");
         System.out.println(deps.datamap.DataConveer.size());
