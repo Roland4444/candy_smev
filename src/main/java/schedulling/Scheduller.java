@@ -12,11 +12,13 @@ import java.sql.SQLException;
 import static java.lang.Thread.sleep;
 
 public class Scheduller implements Controller {
-    public TaskerFromDB tasker=new TaskerFromDB(this.deps);;
-    public ProcessorPuttinDB processor= new ProcessorPuttinDB(this.deps);;
+    public TaskerFromDB tasker;
+    public ProcessorPuttinDB processor;
     public DependencyContainer deps;
     public Scheduller(DependencyContainer deps) throws SQLException, ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
-       this.deps = deps;
+        this.deps = deps;
+        tasker=new TaskerFromDB(this.deps);
+        processor= new ProcessorPuttinDB(this.deps);
     }
     public void run() throws InterruptedException {
         while (true) {

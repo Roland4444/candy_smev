@@ -3,6 +3,7 @@ package DB;
 import crypto.Gost3411Hash;
 import org.junit.Test;
 import readfile.Readfile;
+import schedulling.ResolverImpl.PutResult;
 import util.buildSql;
 
 import java.io.FileWriter;
@@ -50,7 +51,27 @@ public class ExecutorTest {
             wr.write(res);
         }
         wr.close();
+    }
 
+    @Test
+    public void gettasker() throws SQLException, IOException {
+        System.out.println("in tasker==>");
+        Readfile r = new Readfile("sqlset");
+        Executor f = new Executor(r.read(), true);
+        ResultSet Select2 = null;
+        try {
+            Select2 = f.submit("set concat_null_yields_null off; SELECT f_body_xml FROM gis_files WHERE f_stat='0';");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            while (Select2.next()){
+                String res =Select2.getString("f_body_xml");
+                System.out.print(res);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

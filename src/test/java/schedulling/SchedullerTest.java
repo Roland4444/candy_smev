@@ -85,9 +85,7 @@ public class SchedullerTest {
                     assertNotEquals(null, sch.processor);
                     sch.processor.succesquued();
                 }
-
                 else sch.processor.errorquued();
-
             }
 
 
@@ -95,7 +93,8 @@ public class SchedullerTest {
          //   resolver.getOperator().SendSoapSigned();
             it.remove(); // avoids a ConcurrentModificationException
         }
-        sch.run(2);
+        assertNotEquals(null, sch.deps.executor);
+        sch.run(5);
     }
 
 
