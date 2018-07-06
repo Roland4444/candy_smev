@@ -18,39 +18,45 @@ import java.security.NoSuchProviderException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
-public abstract class Standart  {
-    public Standart(){
+public abstract class Standart {
+    public Standart() {
         //this.saaj=saaj;//new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl");
     }
+
     protected Sign MainSign;
-    public void setSAAJ(SAAJ set){
-        this.saaj=set;
+
+    public void setSAAJ(SAAJ set) {
+        this.saaj = set;
     }
+
     /*http://smev3-n0.test.gosuslugi.ru:7500/ws?wsdl*/
     protected SAAJ saaj;
     protected SignerXML signer;
     private StreamResult out;
-    protected Injector inj=new Injector();
+    protected Injector inj = new Injector();
     protected timeBasedUUID gen = new timeBasedUUID();
     public byte[] InfoToRequest;
+
     public void setinput(String input) throws IOException {
-        String dwithId0 = inj.injectTag(input, ":MessageID>",gen.generate());
+        String dwithId0 = inj.injectTag(input, ":MessageID>", gen.generate());
         String dwithId = inj.flushTagData(dwithId0, "CallerInformationSystemSignature");
-        this.InfoToRequest=dwithId.getBytes();
+        this.InfoToRequest = dwithId.getBytes();
     }
+
     public abstract byte[] GetSoap();
+
     public abstract byte[] SignedSoap() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, XMLSecurityException, IOException, CertificateException, NoSuchAlgorithmException, TransformerException, ParserConfigurationException, UnrecoverableEntryException, NoSuchProviderException, SAXException, KeyStoreException;
-  //  public abstract byte[] SendRequestRequest();
+    //  public abstract byte[] SendRequestRequest();
 
     public byte[] SendSoapSigned() throws Exception {
-       InputStream in = new ByteArrayInputStream(SignedSoap());
-       StreamSource input=new StreamSource(in);
-       return this.saaj.send(input);
+        InputStream in = new ByteArrayInputStream(SignedSoap());
+        StreamSource input = new StreamSource(in);
+        return this.saaj.send(input);
     }
 
 
-    public   byte[]GetResReq() throws Exception {
-        String prepared="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
+    public byte[] GetResReq() throws Exception {
+        String prepared = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "<ns:GetResponseRequest>\n" +
@@ -63,28 +69,15 @@ public abstract class Standart  {
         //    String prepared=inj.injectAttribute(data, "Id", "SIGNED_BY_CONSUMER");
         this.setinput(prepared);
         InputStream in = new ByteArrayInputStream(signer.signcallernsbycaller(MainSign, GetSoap()));
-        StreamSource input=new StreamSource(in);
+        StreamSource input = new StreamSource(in);
         return this.saaj.send(input);
 
-    };
+    }
 
-    public   byte[]Ack(String id) throws Exception {
-        String prepared="\uFEFF<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
-                "  <soapenv:Header />\n" +
-                "  <soapenv:Body xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
-                "    <ns:AckRequest>\n" +
-                "      <ns2:AckTargetMessage xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CALLER\" accepted=\"true\">e1a4c9f0-7eba-11e8-83c9-fa163e24a723</ns2:AckTargetMessage>\n" +
-                "      <ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n" +
-                "      </ns4:CallerInformationSystemSignature>\n" +
-                "    </ns:AckRequest>\n" +
-                "  </soapenv:Body>\n" +
-                "</soapenv:Envelope>";
-        //    String prepared=inj.injectAttribute(data, "Id", "SIGNED_BY_CONSUMER");
-        this.setinput(inj.injectTagDirect(prepared, "ns2:AckTargetMessage", id ));
-        InputStream in = new ByteArrayInputStream(signer.signcallernsbycaller(MainSign, GetSoap()));
-        StreamSource input=new StreamSource(in);
-        return this.saaj.send(input);
-    };
+    ;
 
+
+
+    ;
 
 }

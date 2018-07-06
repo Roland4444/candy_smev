@@ -42,4 +42,8 @@ public class ProcessorPuttinDBTest {
     @Test
     public void run1() {
     }
+
+    @Test
+    public void launchAll() {
+    }
 }

@@ -1,6 +1,6 @@
 package schedulling.abstractions;
 
-public interface Processor extends Runnable{
+public interface Processor {
     public void succesquued();
 
     public void errorquued();

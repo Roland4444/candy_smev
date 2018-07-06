@@ -1,6 +1,5 @@
 package schedulling;
 
-import DB.Executor;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import schedulling.ProcessorImplements.ProcessorPuttinDB;
@@ -20,7 +19,7 @@ public class Scheduller implements Controller {
         tasker=new TaskerFromDB(this.deps);
         processor= new ProcessorPuttinDB(this.deps);
     }
-    public void run() throws InterruptedException {
+    public void loop() throws Exception {
         while (true) {
             this.tasker.run();
             sleep(12);
@@ -28,11 +27,16 @@ public class Scheduller implements Controller {
         }
     };
 
-    public void run(int counts) throws InterruptedException {
+    public void loop(int counts) throws Exception {
         for (int i =0; i<counts; i++){
-            this.tasker.run();
-            this.processor.run();
+            System.out.println(i+"    trying");
+            // tasker.loop();
+            processor.sendAll();
+            sleep(5000);
+            processor.run();
         }
     }
+
+
 
 }
