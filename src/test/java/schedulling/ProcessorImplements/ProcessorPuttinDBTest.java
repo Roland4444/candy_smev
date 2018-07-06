@@ -2,8 +2,12 @@ package schedulling.ProcessorImplements;
 
 import DB.Executor;
 import crypto.Gost3411Hash;
+import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
+import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
 import readfile.Readfile;
+import schedulling.abstractions.DependencyContainer;
+import util.SignatureProcessorException;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,12 +20,12 @@ import static org.junit.Assert.*;
 public class ProcessorPuttinDBTest {
 
     @Test
-    public void run() throws SQLException, IOException {
+    public void run() throws SQLException, IOException, ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
         Readfile r = new Readfile("sqlset");
-        ProcessorPuttinDB putin = new ProcessorPuttinDB(new Executor(r.read(), true));
-        PreparedStatement pst = putin.executor.getConn().prepareStatement("INSERT INTO lab.gis_files(?,?,?);");
+        ProcessorPuttinDB putin = new ProcessorPuttinDB(new DependencyContainer());
+        PreparedStatement pst = putin.deps.executor.getConn().prepareStatement("INSERT INTO lab.gis_files(?,?,?);");
         FileWriter wr = new FileWriter("xml4test/extract.xml");
-        ResultSet Select2 = putin.executor.submit("set concat_null_yields_null off; SELECT f_body_xml FROM gis_files WHERE f_stat='0';");
+        ResultSet Select2 = putin.deps.executor.submit("set concat_null_yields_null off; SELECT f_body_xml FROM gis_files WHERE f_stat='0';");
         if (Select2.next()){
             String res =Select2.getString("f_body_xml");
             System.out.print(res);

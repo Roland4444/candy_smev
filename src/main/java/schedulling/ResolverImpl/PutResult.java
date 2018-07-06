@@ -11,6 +11,5 @@ public class PutResult extends ResolverInOutData {
         FileWriter wr = new FileWriter("xml4test/resulter.info", true);
         wr.write(new String(result));
         wr.close();
-
     }
 }

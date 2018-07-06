@@ -1,6 +1,11 @@
 package schedulling;
 
+import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
+import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
+import schedulling.abstractions.DependencyContainer;
+import util.SignatureProcessorException;
+
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
@@ -8,9 +13,11 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class SchedullerTest {
-    Scheduller sch = new Scheduller();
+    DependencyContainer deps = new DependencyContainer();
 
-    public SchedullerTest() throws SQLException {
+    Scheduller sch = new Scheduller(deps);
+
+    public SchedullerTest() throws SQLException, ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
     }
 
     @Test
@@ -33,10 +40,10 @@ public class SchedullerTest {
     public void run1() throws SQLException, InterruptedException {
         sch.setTasker();
         sch.setProcessor();
-        sch.run(2);
+        sch.run();
         String msgIOd="f6a09006-689a-11e8-8058-012ae3068118";
-        assertNotEquals(null, sch.datamap.DataConveer.get(msgIOd));
-        Iterator it = sch.datamap.DataConveer.entrySet().iterator();
+        assertNotEquals(null, sch.deps.datamap.DataConveer.get(msgIOd));
+        Iterator it = sch.deps.datamap.DataConveer.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             System.out.println("Iterator=>"+pair.getKey() );
@@ -50,8 +57,8 @@ public class SchedullerTest {
         sch.setProcessor();
         sch.run(2);
         String msgIOd="f6a09006-689a-11e8-8058-012ae3068118";
-        assertNotEquals(null, sch.datamap.DataConveer.get(msgIOd));
-        Iterator it = sch.datamap.DataConveer.entrySet().iterator();
+        assertNotEquals(null, sch.deps.datamap.DataConveer.get(msgIOd));
+        Iterator it = sch.deps.datamap.DataConveer.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             System.out.println("Iterator=>"+pair.getKey() );
