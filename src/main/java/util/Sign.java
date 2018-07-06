@@ -10,7 +10,6 @@ public class Sign {
         keyStore.load(null, null);
         char[] keyPassword = "vca2018".toCharArray();
         PrivateKey key = (PrivateKey)keyStore.getKey("VCAJ2018", keyPassword);
-        System.out.println(key.toString());
         return key;
     };
 

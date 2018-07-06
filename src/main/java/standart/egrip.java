@@ -20,12 +20,10 @@ import java.security.cert.CertificateException;
 public class egrip extends Standart {
     public egrip(StreamResult sr, SignerXML sihner, Sign signer){
         this.out = sr;
-        this.sihner=sihner;
-        this.signer=signer;
+        this.signer=sihner;
+        this.MainSign =signer;
     }
-    private Sign signer;
     private StreamSource input2;
-    private SignerXML sihner;
     private StreamResult out;
     public void setinput(String input) throws IOException {
         String genned= gen.generate();
@@ -41,10 +39,10 @@ public class egrip extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-       return sihner.signcallerns2(signer, GetSoap());
+       return signer.signcallerns2(MainSign, GetSoap());
     };
     public byte[] GetResponseRequest() throws IOException, CertificateException, NoSuchAlgorithmException, TransformerException, ParserConfigurationException, UnrecoverableEntryException, XMLSecurityException, NoSuchProviderException, SAXException, KeyStoreException {
-        return sihner.signcallerns4(signer, GetSoap());
+        return signer.signcallerns4(MainSign, GetSoap());
     }
 
 

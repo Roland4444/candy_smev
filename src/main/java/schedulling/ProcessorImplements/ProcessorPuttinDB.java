@@ -18,7 +18,7 @@ public class ProcessorPuttinDB implements Processor {
         this.deps=deps;
     }
 
-    public void run(){
+    public void run(){/*
         System.out.println("in processor==>");
         System.out.println(deps.datamap.DataConveer.size());
         if (deps.datamap.DataConveer.size()>0) {
@@ -27,10 +27,14 @@ public class ProcessorPuttinDB implements Processor {
                 Map.Entry pair = (Map.Entry)it.next();
                 System.out.println("Processing MessageID=>"+pair.getKey() );
                 PutResult result = (PutResult) pair.getValue();
-                this.operator=result.operator;
+                try {
+                    this.operator.SendSoapSigned();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 it.remove(); // avoids a ConcurrentModificationException
             }
         }
-
+*/
     };
 }

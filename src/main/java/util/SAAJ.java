@@ -20,13 +20,13 @@ public class SAAJ {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         Source sourceContent = soapResponse.getSOAPPart().getContent();
-        System.out.println("\n----------SOAP Response-----------");
+    //    System.out.println("\n----------SOAP Response-----------");
         byte[] res=null;
         OutputStream out = new ByteArrayOutputStream();
         StreamResult result = new StreamResult(out        );
         transformer.transform(sourceContent, result);
         StreamResult console = new StreamResult(System.out);
-        transformer.transform(sourceContent, console);
+     //   transformer.transform(sourceContent, console);
         return ((ByteArrayOutputStream) out).toByteArray();
     }
 
@@ -79,8 +79,8 @@ public class SAAJ {
         SOAPPart soapPart =     message.getSOAPPart();
         soapPart.setContent(preppedMsgSrc);
         message.saveChanges();
-        System.out.println("\nREQUEST:\n");
-        message.writeTo(System.out);
+    //    System.out.println("\nREQUEST:\n");
+    //    message.writeTo(System.out);
         System.out.println();
         SOAPMessage reply = connection.call(message, this.url);
         createSoapResponse(reply, result);
@@ -96,9 +96,9 @@ public class SAAJ {
         SOAPPart soapPart =     message.getSOAPPart();
         soapPart.setContent(preppedMsgSrc);
         message.saveChanges();
-        System.out.println("\nREQUEST:\n");
+    //    System.out.println("\nREQUEST:\n");
         message.writeTo(System.out);
-        System.out.println();
+    //    System.out.println();
         SOAPMessage reply = connection.call(message, this.url);
         return createSoapResponse(reply);
 

@@ -107,9 +107,7 @@ public class Injector {
        // String input0=input.replace('\n',' ');
         int startpos=input.indexOf(TagnameToBurnWithoutEmbraces);
         if (startpos <0) return input;
-        System.out.println(startpos);
         int stoppos=input.indexOf(TagnameToBurnWithoutEmbraces,startpos+1);
-        System.out.println(stoppos);
         while (input.charAt(startpos)!='<') startpos--;
         while (input.charAt(stoppos)!='>') stoppos++;
         stoppos++;
@@ -125,9 +123,7 @@ public class Injector {
         // String input0=input.replace('\n',' ');
         int startpos=input.indexOf(TagnameToBurnWithoutEmbraces);
         if (startpos <0) return input;
-        System.out.println(startpos);
         int stoppos=input.indexOf(TagnameToBurnWithoutEmbraces,startpos+1);
-        System.out.println(stoppos);
         while (input.charAt(startpos)!='>') startpos++;
         startpos++;
         while (input.charAt(stoppos)!='<') stoppos--;

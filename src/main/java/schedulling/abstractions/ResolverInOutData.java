@@ -5,14 +5,14 @@ import standart.Standart;
 import java.io.IOException;
 
 public abstract class ResolverInOutData {
-    public Standart operator;
-    public Standart getOperator(){
+    public String operator;
+    public String getOperator(){
         return this.operator;
     }
-    public void setOperator(Standart operator){
+    public void setOperator(String operator){
         this.operator=operator;
     };
-    public void setGetDataToWork(byte[] input){
+    public void setDataToWork(byte[] input){
         this.DataToWork = input;
     }
     public byte[] DataToWork;

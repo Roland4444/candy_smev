@@ -22,13 +22,14 @@ public class TaskerFromDB implements Tasker {
             e.printStackTrace();
         }
         try {
-            while (Select2.next()){
+            while (Select2.next()){ 
                 String res =Select2.getString("f_body_xml");
                 String msgId = this.deps.ext.extractTagValue(res, ":MessageID");
                 if (msgId == null) break;
                 if (deps.datamap.DataConveer.get(msgId)==null){
                     PutResult resulter = new PutResult();
-                    resulter.setOperator(new gis(this.deps.sr, this.deps.xmlsign, this.deps.personalSign, this.deps.sign));
+                    resulter.setOperator("gis");
+                    resulter.setDataToWork(res.getBytes());
                     deps.datamap.DataConveer.put(msgId, new PutResult());
                 }
             }

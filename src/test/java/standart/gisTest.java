@@ -414,8 +414,19 @@ public class gisTest {
         System.out.println("*************************************************************************");
         System.out.println("*************************************************************************");
         System.out.println("*************************************************************************");
+    }
 
-
+    @Test
+    public void mg42() throws Exception {
+        String data = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID>1f7386ac-810e-11e8-ad82-8dc4b4c63943</ns:MessageID><ns2:MessagePrimaryContent><req:ImportPaymentsRequest xmlns:req=\"urn://roskazna.ru/gisgmp/xsd/services/import-payments/2.0.1\" xmlns:bdi=\"http://roskazna.ru/gisgmp/xsd/BudgetIndex/2.0.1\" xmlns:chg=\"http://roskazna.ru/gisgmp/xsd/Charge/2.0.1\" xmlns:com=\"http://roskazna.ru/gisgmp/xsd/Common/2.0.1\" xmlns:org=\"http://roskazna.ru/gisgmp/xsd/Organization/2.0.1\" xmlns:pkg=\"http://roskazna.ru/gisgmp/xsd/Package/2.0.1\" xmlns:pmnt=\"http://roskazna.ru/gisgmp/xsd/Payment/2.0.1\" xmlns:rfd=\"http://roskazna.ru/gisgmp/xsd/Refund/2.0.1\" Id=\"PERSONAL_SIGNATURE\" senderIdentifier=\"3637c9\" senderRole=\"9\" timestamp=\"2018-07-05T08:56:33.1249556+04:00\"><pkg:PaymentsPackage><pkg:ImportedPayment Id=\"I_0CA4A062-EC7E-4466-8C07-4F7620274E4D\" amount=\"3500\" kbk=\"73900000000000012130\" oktmo=\"12620000\" paymentDate=\"2018-07-04\" paymentId=\"10412037291501520407201819705872\" purpose=\"Дополнительная классификация . Плата по дополнительному образованию детей (Лабковская Анастасия)\" supplierBillID=\"0\" transKind=\"01\"><pmnt:PaymentOrg><org:Bank bik=\"041203729\" correspondentBankAccount=\"30101810700000000729\" name=\"АО ВКАБАНК\"/></pmnt:PaymentOrg><pmnt:Payer payerIdentifier=\"1010000000001211381133\"/><org:Payee inn=\"3004003907\" kpp=\"302501001\" name=\"УФК по Астраханской области (МБОУ &quot;Восточнинская ООШ&quot; л/с 20256Ц64450)\"><com:OrgAccount accountNumber=\"40701810600001000001\"><com:Bank bik=\"041203001\"/></com:OrgAccount></org:Payee><pmnt:BudgetIndex paytReason=\"0\" status=\"24\" taxDocDate=\"0\" taxDocNumber=\"01;1211381133\" taxPeriod=\"0\"/><pmnt:AccDoc accDocDate=\"2018-07-04\"/><com:ChangeStatus meaning=\"1\"/><com:AdditionalData><com:Name>Плательщик</com:Name><com:Value>Лабковская Елена Олеговна, Икрянинский р-н, с. Икряное, ул. 70 лет октября, д.1Б,</com:Value></com:AdditionalData></pkg:ImportedPayment></pkg:PaymentsPackage></req:ImportPaymentsRequest></ns2:MessagePrimaryContent><ns:PersonalSignature></ns:PersonalSignature><ns:TestMessage/></ns:SenderProvidedRequestData><ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"></ns4:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>";
+        gis.setinput(data);
+        assertNotEquals(null, gis.GetSoap());
+        assertNotEquals(null, gis.SignedSoap());
+        String response = new String(gis.SendSoapSigned());
+        System.out.println(response);
+        if (response.indexOf("fault")>0) {
+            System.out.println("FAULT");
+        }
     }
 }
 
